@@ -3,7 +3,6 @@ import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
-import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -70,7 +69,6 @@ fun BaseExtension.baseConfig() {
             jvmTarget = AppData.jvmTarget
         }
     }
-
 
     buildFeatures.compose = true
 }

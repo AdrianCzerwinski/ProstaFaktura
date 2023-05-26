@@ -1,0 +1,44 @@
+name: Android CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  static-analysis:
+    name: Run static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          cache: 'gradle'
+          java-version: '17'
+          server-id: maven
+          settings-path: ${{ github.workspace }}
+      - name: Run ktlint
+        run: ./gradlew ktlintCheck
+      - name: Run detekt
+        run: ./gradlew detekt
+
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          cache: 'gradle'
+          java-version: '17'
+          server-id: maven
+          settings-path: ${{ github.workspace }}
+      - name: Run unit tests
+        run: ./gradlew test
