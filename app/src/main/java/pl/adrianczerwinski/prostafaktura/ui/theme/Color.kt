@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package pl.adrianczerwinski.prostafaktura.ui.theme
 
 import androidx.compose.ui.graphics.Color

@@ -1,6 +1,17 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+}
+
+detekt {
+    toolVersion = Versions.detekt
+    config = files("$rootDir/gradle/detekt-config.yml")
+    parallel = true
+
+    buildUponDefaultConfig = true
 }
 
 android {
@@ -15,6 +26,10 @@ android {
         }
     }
     kotlinOptions {
+        jvmTarget = AppData.jvmTarget
+    }
+
+    tasks.withType<Detekt>().configureEach {
         jvmTarget = AppData.jvmTarget
     }
 }

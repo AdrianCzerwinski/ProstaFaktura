@@ -3,6 +3,7 @@ import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -10,16 +11,27 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.8.10" apply false
     id("org.jetbrains.kotlin.jvm") version "1.8.10" apply false
     id("com.android.library") version "8.1.0-beta03" apply false
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
     `kotlin-dsl`
 }
 
-subprojects {
+allprojects {
     project.plugins.applyBaseConfig(project)
+    apply(plugin = Plugins.ktlint)
+    apply(plugin = Plugins.detekt)
+}
+
+buildscript {
+    repositories {
+        maven(Plugins.maven)
+    }
+    dependencies {
+        classpath(Dependencies.CleanCode.ktlint)
+    }
 }
 
 fun BaseExtension.baseConfig() {
-
-    compileSdkVersion(33)
+    compileSdkVersion(AppData.compileSdk)
 
     defaultConfig.apply {
         applicationId = AppData.applicationId
@@ -33,6 +45,7 @@ fun BaseExtension.baseConfig() {
             useSupportLibrary = true
         }
     }
+
     buildTypes {
         getByName("debug") {
             isMinifyEnabled = true
@@ -52,11 +65,12 @@ fun BaseExtension.baseConfig() {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    tasks.withType<KotlinCompile> {
+    tasks.withType<KotlinCompile>().all {
         kotlinOptions {
             jvmTarget = AppData.jvmTarget
         }
     }
+
 
     buildFeatures.compose = true
 }
