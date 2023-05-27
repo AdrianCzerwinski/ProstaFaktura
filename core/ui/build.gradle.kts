@@ -1,23 +1,10 @@
-import io.gitlab.arturbosch.detekt.Detekt
-
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
-}
-
-detekt {
-    toolVersion = Versions.detekt
-    config = files("$rootDir/gradle/detekt-config.yml")
-    parallel = true
-
-    buildUponDefaultConfig = true
 }
 
 android {
-    namespace = "pl.adrianczerwinski.prostafaktura"
-
-    defaultConfig.applicationId = AppData.applicationId
+    namespace = "pl.adrianczerwinski.prostafaktura.ui"
 
     composeOptions {
         kotlinCompilerExtensionVersion = AppData.kotlinCompilerExtensionVersion
@@ -31,15 +18,20 @@ android {
         jvmTarget = AppData.jvmTarget
     }
 
-    tasks.withType<Detekt>().configureEach {
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
         jvmTarget = AppData.jvmTarget
     }
 }
 
+detekt {
+    toolVersion = Versions.detekt
+    config = files("$rootDir/gradle/detekt-config.yml")
+    parallel = true
+
+    buildUponDefaultConfig = true
+}
+
 dependencies {
-
-    implementation(project(":features:launch"))
-
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.lifecycleRuntimeKtx)
     implementation(Dependencies.activityCompose)

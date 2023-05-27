@@ -3,6 +3,7 @@ object Versions {
     const val androidxTestExtJunit = "1.1.3"
     const val bom = "2023.04.01"
     const val compose = "1.4.3"
+    const val composeNavigation = "2.5.3"
     const val coreKtx = "1.10.1"
     const val detekt = "1.22.0"
     const val espressoCore = "3.5.1"
@@ -26,6 +27,7 @@ object Dependencies {
         const val uiTestJUnit4 = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
         const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
         const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
+        const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
     }
 
     object Test {

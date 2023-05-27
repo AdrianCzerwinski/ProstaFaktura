@@ -14,10 +14,23 @@ plugins {
     `kotlin-dsl`
 }
 
-allprojects {
+subprojects {
     project.plugins.applyBaseConfig(project)
     apply(plugin = Plugins.ktlint)
     apply(plugin = Plugins.detekt)
+
+    detekt {
+        toolVersion = Versions.detekt
+        config = files("$rootDir/gradle/detekt-config.yml")
+        parallel = true
+
+        buildUponDefaultConfig = true
+    }
+
+
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+        jvmTarget = AppData.jvmTarget
+    }
 }
 
 buildscript {
@@ -33,7 +46,6 @@ fun BaseExtension.baseConfig() {
     compileSdkVersion(AppData.compileSdk)
 
     defaultConfig.apply {
-        applicationId = AppData.applicationId
         minSdk = AppData.minSdk
         targetSdk = AppData.targetSdk
         versionCode = AppData.versionCode
