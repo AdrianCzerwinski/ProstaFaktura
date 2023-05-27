@@ -11,6 +11,7 @@ object Versions {
     const val ktlint = "11.1.0"
     const val lifecycleRuntimeKtx = "2.6.1"
     const val material3 = "1.1.0"
+    const val datastore = "1.0.0"
 }
 
 object Dependencies {
@@ -40,9 +41,12 @@ object Dependencies {
     }
 
     object CleanCode {
-
         const val detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
         const val ktlint = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlint}"
+    }
+
+    object Database {
+        const val datastore = "androidx.datastore:datastore-preferences-core:${Versions.datastore}"
     }
 }
 

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "pl.adrianczerwinski.prostafaktura.launch"
+    namespace = "pl.adrianczerwinski.prostafaktura.features.launch"
 
     composeOptions {
         kotlinCompilerExtensionVersion = AppData.kotlinCompilerExtensionVersion

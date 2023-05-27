@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "pl.adrianczerwinski.prostafaktura.core.common"
+    namespace = "pl.adrianczerwinski.prostafaktura.data.user"
 
     composeOptions {
         kotlinCompilerExtensionVersion = AppData.kotlinCompilerExtensionVersion
@@ -26,5 +26,6 @@ android {
 dependencies {
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.lifecycleRuntimeKtx)
-    implementation(Dependencies.activityCompose)
+
+    implementation(Dependencies.Database.datastore)
 }
