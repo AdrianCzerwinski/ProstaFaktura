@@ -18,6 +18,7 @@ object Versions {
     const val turbine = "0.5.2"
     const val coroutinesTest = "1.6.0"
     const val truth = "1.1.3"
+    const val fonts = "1.4.3"
 }
 
 object Dependencies {
@@ -67,6 +68,10 @@ object Dependencies {
         const val hiltCoreCompiler = "androidx.hilt:hilt-compiler:${Versions.hiltCore}"
         const val hiltComposeNavigation = "androidx.hilt:hilt-navigation-compose:${Versions.hiltCore}"
         const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+    }
+
+    object Google {
+        const val fonts = "androidx.compose.ui:ui-text-google-fonts:${Versions.fonts}"
     }
 }
 

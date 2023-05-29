@@ -27,6 +27,7 @@ android {
 dependencies {
 
     implementation(project(":features:launch"))
+    implementation(project(":core:ui"))
 
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.lifecycleRuntimeKtx)

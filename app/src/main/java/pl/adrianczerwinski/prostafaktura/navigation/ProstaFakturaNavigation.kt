@@ -1,6 +1,9 @@
 package pl.adrianczerwinski.prostafaktura.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,7 +17,11 @@ import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Onboarding
 fun ProstaFakturaNavigation(navController: NavHostController) {
     val launchFeatureNavigation: LaunchFeatureNavigation = LaunchFeatureNavigationImpl(navController)
 
-    NavHost(navController = navController, startDestination = Launch.ROUTE) {
+    NavHost(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        navController = navController,
+        startDestination = Launch.ROUTE
+    ) {
         composable(Launch.ROUTE) {
             Launch(launchFeatureNavigation)
         }
