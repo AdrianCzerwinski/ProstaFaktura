@@ -15,12 +15,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Prosta Faktura"
 include(":app")
-include(":features")
 include(":features:launch")
-include(":core")
 include(":core:ui")
 include(":core:common")
-include(":data")
-include(":domain")
 include(":data:user")
 include(":domain:user")

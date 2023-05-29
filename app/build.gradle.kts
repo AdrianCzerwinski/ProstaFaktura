@@ -1,9 +1,9 @@
-import io.gitlab.arturbosch.detekt.Detekt
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 detekt {
@@ -17,23 +17,11 @@ detekt {
 android {
     namespace = "pl.adrianczerwinski.prostafaktura"
 
-    defaultConfig.applicationId = AppData.applicationId
-
     composeOptions {
         kotlinCompilerExtensionVersion = AppData.kotlinCompilerExtensionVersion
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    kotlinOptions {
-        jvmTarget = AppData.jvmTarget
-    }
 
-    tasks.withType<Detekt>().configureEach {
-        jvmTarget = AppData.jvmTarget
-    }
+    defaultConfig.applicationId = AppData.applicationId
 }
 
 dependencies {
@@ -49,8 +37,13 @@ dependencies {
     implementation(Dependencies.Compose.uiGraphics)
     implementation(Dependencies.Compose.uiToolingPreview)
     implementation(Dependencies.Compose.material3)
+    implementation(Dependencies.Compose.runtime)
 
     implementation(Dependencies.Compose.navigation)
+
+    implementation(Dependencies.DI.hilt)
+    kapt(Dependencies.DI.hiltCompiler)
+    kapt(Dependencies.DI.hiltCoreCompiler)
 
     testImplementation(Dependencies.Test.junit)
 
@@ -61,4 +54,8 @@ dependencies {
 
     debugImplementation(Dependencies.Compose.uiTooling)
     debugImplementation(Dependencies.Compose.uiTestManifest)
+}
+
+kapt {
+    correctErrorTypes = true
 }

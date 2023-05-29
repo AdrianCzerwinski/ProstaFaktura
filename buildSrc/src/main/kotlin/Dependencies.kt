@@ -12,6 +12,8 @@ object Versions {
     const val lifecycleRuntimeKtx = "2.6.1"
     const val material3 = "1.1.0"
     const val datastore = "1.0.0"
+    const val hilt = "2.46.1"
+    const val hiltCore = "1.0.0"
 }
 
 object Dependencies {
@@ -29,6 +31,7 @@ object Dependencies {
         const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
         const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
         const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
+        const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
     }
 
     object Test {
@@ -46,7 +49,15 @@ object Dependencies {
     }
 
     object Database {
-        const val datastore = "androidx.datastore:datastore-preferences-core:${Versions.datastore}"
+        const val datastore = "androidx.datastore:datastore-preferences:${Versions.datastore}"
+    }
+
+    object DI {
+        const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+        const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
+        const val hiltCoreCompiler = "androidx.hilt:hilt-compiler:${Versions.hiltCore}"
+        const val hiltComposeNavigation = "androidx.hilt:hilt-navigation-compose:${Versions.hiltCore}"
+        const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
     }
 }
 

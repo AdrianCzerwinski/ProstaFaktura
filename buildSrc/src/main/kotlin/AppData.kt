@@ -1,3 +1,5 @@
+import org.gradle.api.JavaVersion
+
 object AppData {
     const val applicationId = "pl.adrianczerwinski.prostafaktura"
     const val compileSdk = 33
@@ -6,5 +8,5 @@ object AppData {
     const val versionCode = 1
     const val versionName = "1.0"
     const val kotlinCompilerExtensionVersion = "1.4.3"
-    const val jvmTarget = "1.8"
+    val jvmTarget = "1.8"
 }

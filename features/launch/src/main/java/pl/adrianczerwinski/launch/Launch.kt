@@ -19,11 +19,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import pl.adrianczerwinski.common.HandleAction
+import pl.adrianczerwinski.launch.LaunchUiAction.OpenMainScreen
+import pl.adrianczerwinski.launch.LaunchUiAction.OpenOnboarding
 import pl.adrianczerwinski.prostafaktura.core.ui.R as uiR
 
 @Composable
-fun Launch() {
+fun Launch(
+    navigation: LaunchFeatureNavigation,
+    viewModel: LaunchViewModel = hiltViewModel()
+) {
     LaunchScreen()
+
+    HandleAction(action = viewModel.actions) { action ->
+        when (action) {
+            OpenMainScreen -> navigation.openMainScreen()
+            OpenOnboarding -> navigation.openOnboarding()
+        }
+    }
 }
 
 @Composable
@@ -39,7 +53,9 @@ private fun LaunchScreen() = Box(modifier = Modifier.fillMaxSize(), contentAlign
         label = "Icon alpha transition"
     )
     Icon(
-        modifier = Modifier.size(appIconSize).alpha(iconAlpha),
+        modifier = Modifier
+            .size(appIconSize)
+            .alpha(iconAlpha),
         painter = painterResource(id = uiR.drawable.ic_prosta_faktura_icon),
         contentDescription = "App Icon",
         tint = Color.Unspecified

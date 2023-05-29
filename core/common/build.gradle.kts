@@ -17,7 +17,6 @@ android {
     kotlinOptions {
         jvmTarget = AppData.jvmTarget
     }
-
     tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
         jvmTarget = AppData.jvmTarget
     }
