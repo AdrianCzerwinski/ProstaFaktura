@@ -50,6 +50,10 @@ dependencies {
     kapt(Dependencies.DI.hiltCoreCompiler)
 
     testImplementation(Dependencies.Test.junit)
+    testImplementation(Dependencies.Test.mockk)
+    testImplementation(Dependencies.Test.coroutinesTest)
+    testImplementation(Dependencies.Test.turbine)
+    testImplementation(Dependencies.Test.truth)
 
     debugImplementation(Dependencies.Compose.uiTooling)
     debugImplementation(Dependencies.Compose.uiTestManifest)

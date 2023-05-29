@@ -1,6 +1,5 @@
 package pl.adrianczerwinski.launch
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -22,16 +21,15 @@ class LaunchViewModel @Inject constructor(
 ) : ActionsViewModel<LaunchUiAction>() {
 
     init {
-        getUserRegistered()
+        getIsUserRegistered()
     }
 
-    private fun getUserRegistered() = viewModelScope.launch {
+    private fun getIsUserRegistered() = viewModelScope.launch {
         getUserRegisteredUseCase().collectLatest { result ->
             if (result.isSuccess) {
                 if (result.getOrThrow() == true) action(OpenMainScreen) else action(OpenOnboarding)
             } else {
                 action(OpenOnboarding)
-                Log.d("ProstaFaktura: ", "User not found error")
             }
         }
     }

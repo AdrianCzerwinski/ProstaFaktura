@@ -11,7 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-private const val USER_PREFERENCES = "user_preferences"
+private const val USER_PREFERENCES = "USER_PREFERENCES"
 
 class UserDataStoreImpl(@ApplicationContext private val context: Context) : UserDataStore {
 

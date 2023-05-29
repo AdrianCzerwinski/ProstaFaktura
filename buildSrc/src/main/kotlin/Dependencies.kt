@@ -14,6 +14,10 @@ object Versions {
     const val datastore = "1.0.0"
     const val hilt = "2.46.1"
     const val hiltCore = "1.0.0"
+    const val mockk = "1.12.0"
+    const val turbine = "0.5.2"
+    const val coroutinesTest = "1.6.0"
+    const val truth = "1.1.3"
 }
 
 object Dependencies {
@@ -36,6 +40,11 @@ object Dependencies {
 
     object Test {
         const val junit = "junit:junit:${Versions.junit}"
+        const val mockk = "io.mockk:mockk:${Versions.mockk}"
+        const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
+        const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesTest}"
+        const val truth = "com.google.truth:truth:${Versions.truth
+        }"
 
         object AndroidXTest {
             const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCore}"
