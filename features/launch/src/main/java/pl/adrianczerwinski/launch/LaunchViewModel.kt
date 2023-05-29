@@ -2,6 +2,7 @@ package pl.adrianczerwinski.launch
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pl.adrianczerwinski.common.ActionsViewModel
@@ -26,6 +27,7 @@ class LaunchViewModel @Inject constructor(
 
     private fun getIsUserRegistered() = viewModelScope.launch {
         getUserRegisteredUseCase().collectLatest { result ->
+            delay(LOADER_DELAY)
             if (result.isSuccess) {
                 if (result.getOrThrow() == true) action(OpenMainScreen) else action(OpenOnboarding)
             } else {
@@ -34,3 +36,5 @@ class LaunchViewModel @Inject constructor(
         }
     }
 }
+
+private const val LOADER_DELAY = 1000L

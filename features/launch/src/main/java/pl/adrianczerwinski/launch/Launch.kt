@@ -1,5 +1,6 @@
 package pl.adrianczerwinski.launch
 
+import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -36,8 +37,14 @@ fun Launch(
 
     HandleAction(action = viewModel.actions) { action ->
         when (action) {
-            OpenMainScreen -> navigation.openMainScreen()
-            OpenOnboarding -> navigation.openOnboarding()
+            OpenMainScreen -> {
+                Log.d("Adik", "Should navigate to main screen")
+                navigation.openMainScreen()
+            }
+            OpenOnboarding -> {
+                navigation.openOnboarding()
+                Log.d("Adik", "Should navigate to onboarding")
+            }
         }
     }
 }

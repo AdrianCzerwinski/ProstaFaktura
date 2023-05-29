@@ -10,6 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
@@ -39,6 +40,8 @@ class LaunchViewModelTest {
         coEvery { getUserRegisteredUseCase() } returns flowOf(Result.success(true))
 
         launchViewModel.actions.test {
+            advanceUntilIdle()
+
             assertThat(expectItem()).isEqualTo(OpenMainScreen)
         }
     }
@@ -48,6 +51,8 @@ class LaunchViewModelTest {
         coEvery { getUserRegisteredUseCase() } returns flowOf(Result.success(false))
 
         launchViewModel.actions.test {
+            advanceUntilIdle()
+
             assertThat(expectItem()).isEqualTo(OpenOnboarding)
         }
     }
@@ -57,6 +62,8 @@ class LaunchViewModelTest {
         coEvery { getUserRegisteredUseCase() } returns flowOf(Result.failure(Throwable()))
 
         launchViewModel.actions.test {
+            advanceUntilIdle()
+
             assertThat(expectItem()).isEqualTo(OpenOnboarding)
         }
     }

@@ -10,12 +10,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import pl.adrianczerwinski.launch.Launch
 import pl.adrianczerwinski.launch.LaunchFeatureNavigation
+import pl.adrianczerwinski.onboarding.Onboarding
+import pl.adrianczerwinski.onboarding.OnboardingFeatureNavigation
 import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Launch
 import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Onboarding
 
 @Composable
 fun ProstaFakturaNavigation(navController: NavHostController) {
     val launchFeatureNavigation: LaunchFeatureNavigation = LaunchFeatureNavigationImpl(navController)
+    val onboardingFeatureNavigationImpl: OnboardingFeatureNavigation = OnboardingFeatureNavigationImpl(navController)
 
     NavHost(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
@@ -30,9 +33,9 @@ fun ProstaFakturaNavigation(navController: NavHostController) {
             startDestination = Onboarding.ONBOARDING_WELCOME,
             route = Onboarding.ROUTE
         ) {
-            composable(Onboarding.ONBOARDING_WELCOME) {}
+            composable(Onboarding.ONBOARDING_WELCOME) { Onboarding(onboardingFeatureNavigationImpl) }
             composable(Onboarding.ONBOARDING_USER_INFO) {}
-            composable(Onboarding.ONBOARDING_PAYMENT_INFO) {}
+            composable(Onboarding.ONBOARDING_ACCOUNT_INFO) {}
         }
     }
 }
@@ -47,7 +50,7 @@ object Destinations {
 
         const val ONBOARDING_WELCOME = "onboarding_welcome"
         const val ONBOARDING_USER_INFO = "onboarding_user_info"
-        const val ONBOARDING_PAYMENT_INFO = "onboarding_payment_info"
+        const val ONBOARDING_ACCOUNT_INFO = "onboarding_payment_info"
     }
 
     object Main {

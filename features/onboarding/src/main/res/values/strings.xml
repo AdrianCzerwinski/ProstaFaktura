@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Ahoj !</string>
+    <string name="onboarding_text_1">Najprostszy sposób na wystawienie faktury</string>
+    <string name="onboarding_text_2">Zaoszczędź czas i automatycznie wysyłaj fakturę mailem z poziomu aplikacji</string>
+    <string name="onboarding_text_3">Aplikacja obsługuje rynek polski i niemiecki</string>
+    <string name="open_sign_in">Do rejestracji</string>
+</resources>

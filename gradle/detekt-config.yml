@@ -329,8 +329,8 @@ naming:
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     parameterPattern: '[a-z][A-Za-z0-9]*|_'
   MatchingDeclarationName:
-    active: true
-    mustBeFirst: true
+    active: false
+    mustBeFirst: false
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true

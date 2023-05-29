@@ -19,6 +19,7 @@ object Versions {
     const val coroutinesTest = "1.6.0"
     const val truth = "1.1.3"
     const val fonts = "1.4.3"
+    const val composeLifecycle = "2.6.1"
 }
 
 object Dependencies {
@@ -37,6 +38,7 @@ object Dependencies {
         const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
         const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
         const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
+        const val lifeCycle = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.composeLifecycle}"
     }
 
     object Test {
