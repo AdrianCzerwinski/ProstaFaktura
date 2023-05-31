@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import pl.adrianczerwinski.common.ActionsViewModel
 import pl.adrianczerwinski.common.action
-import pl.adrianczerwinski.domain.user.GetUserRegisteredUseCase
+import pl.adrianczerwinski.domain.user.GetOnboardingShownUseCase
 import pl.adrianczerwinski.launch.LaunchUiAction.OpenMainScreen
 import pl.adrianczerwinski.launch.LaunchUiAction.OpenOnboarding
 import javax.inject.Inject
@@ -18,7 +18,7 @@ sealed class LaunchUiAction {
 }
 @HiltViewModel
 class LaunchViewModel @Inject constructor(
-    private val getUserRegisteredUseCase: GetUserRegisteredUseCase
+    private val getOnboardingShownUseCase: GetOnboardingShownUseCase
 ) : ActionsViewModel<LaunchUiAction>() {
 
     init {
@@ -26,7 +26,7 @@ class LaunchViewModel @Inject constructor(
     }
 
     private fun getIsUserRegistered() = viewModelScope.launch {
-        getUserRegisteredUseCase().collectLatest { result ->
+        getOnboardingShownUseCase().collectLatest { result ->
             delay(LOADER_DELAY)
             if (result.isSuccess) {
                 if (result.getOrThrow() == true) action(OpenMainScreen) else action(OpenOnboarding)

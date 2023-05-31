@@ -36,7 +36,7 @@ fun ElevatedIconButton(
     contentPadding = PaddingValues(12.dp)
 ) {
     Box(modifier = Modifier.fillMaxWidth()) {
-        Text(modifier = Modifier.align(Center), text = text, style = textStyle)
+        Text(modifier = Modifier.align(Center), text = text, style = textStyle, color = MaterialTheme.colorScheme.onBackground)
         icon?.let {
             Icon(
                 modifier = Modifier
@@ -44,6 +44,7 @@ fun ElevatedIconButton(
                     .align(CenterEnd),
                 imageVector = it,
                 contentDescription = "Forward Arrow",
+                tint = MaterialTheme.colorScheme.onBackground
             )
         }
     }

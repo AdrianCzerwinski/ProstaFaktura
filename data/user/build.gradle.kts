@@ -5,6 +5,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
     kotlin("kapt")
 }
 
@@ -32,6 +33,18 @@ android {
             jvmTarget = AppData.jvmTarget
         }
     }
+
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true",
+                    "room.expandProjection" to "true"
+                )
+            }
+        }
+    }
 }
 
 dependencies {
@@ -43,6 +56,10 @@ dependencies {
     kapt(Dependencies.DI.hiltCoreCompiler)
 
     implementation(Dependencies.Database.datastore)
+    implementation(Dependencies.Database.Room.room)
+    annotationProcessor(Dependencies.Database.Room.roomCompiler)
+    implementation(Dependencies.Database.Room.roomCoroutines)
+    kapt(Dependencies.Database.Room.roomCompiler)
 
     implementation(Dependencies.Compose.runtime)
 }

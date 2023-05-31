@@ -1,44 +1,44 @@
-package pl.adrianczerwinski.onboarding
+package pl.adrianczerwinski.onboarding.welcome
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import pl.adrianczerwinski.common.StateActionsViewModel
 import pl.adrianczerwinski.common.action
-import pl.adrianczerwinski.onboarding.OnboardingUiAction.OpenSignIn
-import pl.adrianczerwinski.onboarding.OnboardingUiEvent.ButtonPressed
+import pl.adrianczerwinski.onboarding.welcome.OnboardingUiAction.OpenSignIn
+import pl.adrianczerwinski.onboarding.welcome.WelcomeUiEvent.ButtonPressed
 import pl.adrianczerwinski.prostafaktura.features.onboarding.R
 import javax.inject.Inject
 
 private val onboardingPages = listOf(
-    PageUiModel(
+    WelcomePageUiModel(
         pageImage = R.drawable.onboarding_1,
         text = R.string.onboarding_text_1
     ),
-    PageUiModel(
+    WelcomePageUiModel(
         pageImage = R.drawable.onboarding_2,
         text = R.string.onboarding_text_2
     ),
-    PageUiModel(
+    WelcomePageUiModel(
         pageImage = R.drawable.onboarding_3,
         text = R.string.onboarding_text_3
     )
 )
 
-data class OnboardingUiState(
-    val pages: List<PageUiModel> = onboardingPages
+data class WelcomeUiState(
+    val pages: List<WelcomePageUiModel> = onboardingPages
 )
 
 sealed class OnboardingUiAction {
     object OpenSignIn : OnboardingUiAction()
 }
 
-sealed class OnboardingUiEvent {
-    object ButtonPressed : OnboardingUiEvent()
+sealed class WelcomeUiEvent {
+    object ButtonPressed : WelcomeUiEvent()
 }
 
 @HiltViewModel
-class OnboardingViewModel @Inject constructor() : StateActionsViewModel<OnboardingUiState, OnboardingUiAction>(OnboardingUiState()) {
+class WelcomeViewModel @Inject constructor() : StateActionsViewModel<WelcomeUiState, OnboardingUiAction>(WelcomeUiState()) {
 
-    fun handleUiEvent(event: OnboardingUiEvent) {
+    fun handleUiEvent(event: WelcomeUiEvent) {
         when (event) {
             is ButtonPressed -> action(OpenSignIn)
         }

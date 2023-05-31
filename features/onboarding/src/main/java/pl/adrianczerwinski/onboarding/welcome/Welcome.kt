@@ -1,11 +1,10 @@
-package pl.adrianczerwinski.onboarding
+package pl.adrianczerwinski.onboarding.welcome
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.MaterialTheme
@@ -24,27 +25,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import pl.adrianczerwinski.common.HandleAction
-import pl.adrianczerwinski.onboarding.OnboardingUiAction.OpenSignIn
-import pl.adrianczerwinski.onboarding.OnboardingUiEvent.ButtonPressed
+import pl.adrianczerwinski.onboarding.OnboardingFeatureNavigation
+import pl.adrianczerwinski.onboarding.welcome.OnboardingUiAction.OpenSignIn
+import pl.adrianczerwinski.onboarding.welcome.WelcomeUiEvent.ButtonPressed
 import pl.adrianczerwinski.prostafaktura.features.onboarding.R
+import pl.adrianczerwinski.ui.ScreenLightDarkPreview
+import pl.adrianczerwinski.ui.ScreenPreview
 import pl.adrianczerwinski.ui.components.ElevatedIconButton
 import pl.adrianczerwinski.ui.components.PagerIndicator
 import pl.adrianczerwinski.ui.components.SpacerLarge
 import pl.adrianczerwinski.ui.components.SpacerXXLarge
 
 @Composable
-fun Onboarding(
+fun Welcome(
     navigation: OnboardingFeatureNavigation,
-    viewModel: OnboardingViewModel = hiltViewModel()
+    viewModel: WelcomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.states.collectAsStateWithLifecycle()
 
-    OnboardingScreen(
+    WelcomeScreen(
         uiEvent = viewModel::handleUiEvent,
         uiState = uiState
     )
@@ -58,9 +61,9 @@ fun Onboarding(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun OnboardingScreen(
-    uiState: OnboardingUiState,
-    uiEvent: (OnboardingUiEvent) -> Unit = {}
+private fun WelcomeScreen(
+    uiState: WelcomeUiState,
+    uiEvent: (WelcomeUiEvent) -> Unit = {}
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
@@ -68,13 +71,19 @@ private fun OnboardingScreen(
     horizontalAlignment = Alignment.CenterHorizontally
 ) {
     val pagerState = rememberPagerState()
-    SpacerXXLarge()
-    Text(text = stringResource(R.string.welcome), style = MaterialTheme.typography.titleLarge)
-    SpacerLarge()
-    Pager(pages = uiState.pages, pagerState = pagerState) { }
-    SpacerLarge()
-    PagerIndicator(pageCount = uiState.pages.size, currentPage = pagerState.currentPage)
-    SpacerLarge()
+    Column(modifier = Modifier.verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
+        SpacerXXLarge()
+        Text(
+            text = stringResource(R.string.welcome),
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+        SpacerLarge()
+        Pager(pages = uiState.pages, pagerState = pagerState) { }
+        SpacerLarge()
+        PagerIndicator(pageCount = uiState.pages.size, currentPage = pagerState.currentPage)
+        SpacerLarge()
+    }
     Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Bottom) {
         AnimatedVisibility(visible = !pagerState.canScrollForward, enter = fadeIn(), exit = ExitTransition.None) {
             ElevatedIconButton(
@@ -91,7 +100,7 @@ private fun OnboardingScreen(
 @Composable
 private fun Pager(
     pagerState: PagerState,
-    pages: List<PageUiModel>,
+    pages: List<WelcomePageUiModel>,
     onPageChanged: (Int) -> Unit
 ) {
     HorizontalPager(
@@ -107,18 +116,15 @@ private fun Pager(
             Text(
                 text = stringResource(id = pages[currentPage].text),
                 style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
     }
 }
 
-@Preview
+@ScreenLightDarkPreview
 @Composable
-fun OnboardingScreenPreview() = Column(
-    modifier = Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background)
-) {
-    OnboardingScreen(uiState = OnboardingUiState())
+fun OnboardingScreenPreview() = ScreenPreview {
+    WelcomeScreen(uiState = WelcomeUiState())
 }

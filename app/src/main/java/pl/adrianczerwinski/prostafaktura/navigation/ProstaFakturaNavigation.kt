@@ -10,8 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import pl.adrianczerwinski.launch.Launch
 import pl.adrianczerwinski.launch.LaunchFeatureNavigation
-import pl.adrianczerwinski.onboarding.Onboarding
 import pl.adrianczerwinski.onboarding.OnboardingFeatureNavigation
+import pl.adrianczerwinski.onboarding.welcome.Welcome
 import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Launch
 import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Onboarding
 
@@ -33,7 +33,7 @@ fun ProstaFakturaNavigation(navController: NavHostController) {
             startDestination = Onboarding.ONBOARDING_WELCOME,
             route = Onboarding.ROUTE
         ) {
-            composable(Onboarding.ONBOARDING_WELCOME) { Onboarding(onboardingFeatureNavigationImpl) }
+            composable(Onboarding.ONBOARDING_WELCOME) { Welcome(onboardingFeatureNavigationImpl) }
             composable(Onboarding.ONBOARDING_USER_INFO) {}
             composable(Onboarding.ONBOARDING_ACCOUNT_INFO) {}
         }

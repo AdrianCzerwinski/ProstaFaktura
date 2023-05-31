@@ -10,15 +10,12 @@ import pl.adrianczerwinski.user.database.UserDataStore
 import pl.adrianczerwinski.user.database.UserDataStoreImpl
 import javax.inject.Singleton
 
-@Suppress("UnnecessaryAbstractClass")
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface DataStoreModule {
-    companion object {
-        @Provides
-        @Singleton
-        fun providesUserDataStore(
-            @ApplicationContext context: Context
-        ): UserDataStore = UserDataStoreImpl(context)
-    }
+object DataStoreModule {
+    @Provides
+    @Singleton
+    fun providesUserDataStore(
+        @ApplicationContext context: Context
+    ): UserDataStore = UserDataStoreImpl(context)
 }

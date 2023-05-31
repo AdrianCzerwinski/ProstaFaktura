@@ -15,7 +15,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Test
-import pl.adrianczerwinski.domain.user.GetUserRegisteredUseCase
+import pl.adrianczerwinski.domain.user.GetOnboardingShownUseCase
 import pl.adrianczerwinski.launch.LaunchUiAction.OpenMainScreen
 import pl.adrianczerwinski.launch.LaunchUiAction.OpenOnboarding
 import kotlin.time.ExperimentalTime
@@ -24,7 +24,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalCoroutinesApi
 @FlowPreview
 class LaunchViewModelTest {
-    private val getUserRegisteredUseCase = mockk<GetUserRegisteredUseCase>()
+    private val getOnboardingShownUseCase = mockk<GetOnboardingShownUseCase>()
     private lateinit var launchViewModel: LaunchViewModel
     private val dispatcher = StandardTestDispatcher()
 
@@ -32,12 +32,12 @@ class LaunchViewModelTest {
     fun setup() {
         Dispatchers.setMain(dispatcher)
         MockKAnnotations.init(this)
-        launchViewModel = LaunchViewModel(getUserRegisteredUseCase)
+        launchViewModel = LaunchViewModel(getOnboardingShownUseCase)
     }
 
     @Test
     fun `when getUserRegisteredUseCase returns true, emits OpenMainScreen`() = runTest {
-        coEvery { getUserRegisteredUseCase() } returns flowOf(Result.success(true))
+        coEvery { getOnboardingShownUseCase() } returns flowOf(Result.success(true))
 
         launchViewModel.actions.test {
             advanceUntilIdle()
@@ -48,7 +48,7 @@ class LaunchViewModelTest {
 
     @Test
     fun `when getUserRegisteredUseCase returns false, emits OpenOnboarding`() = runTest {
-        coEvery { getUserRegisteredUseCase() } returns flowOf(Result.success(false))
+        coEvery { getOnboardingShownUseCase() } returns flowOf(Result.success(false))
 
         launchViewModel.actions.test {
             advanceUntilIdle()
@@ -59,7 +59,7 @@ class LaunchViewModelTest {
 
     @Test
     fun `when getUserRegisteredUseCase returns error, emits OpenOnboarding`() = runTest {
-        coEvery { getUserRegisteredUseCase() } returns flowOf(Result.failure(Throwable()))
+        coEvery { getOnboardingShownUseCase() } returns flowOf(Result.failure(Throwable()))
 
         launchViewModel.actions.test {
             advanceUntilIdle()

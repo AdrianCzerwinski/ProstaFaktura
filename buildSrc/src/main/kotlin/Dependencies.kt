@@ -20,6 +20,7 @@ object Versions {
     const val truth = "1.1.3"
     const val fonts = "1.4.3"
     const val composeLifecycle = "2.6.1"
+    const val room = "2.5.1"
 }
 
 object Dependencies {
@@ -62,6 +63,14 @@ object Dependencies {
 
     object Database {
         const val datastore = "androidx.datastore:datastore-preferences:${Versions.datastore}"
+
+        object Room {
+            const val room = "androidx.room:room-runtime:${Versions.room}"
+            const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+            const val roomCoroutines = "androidx.room:room-ktx:${Versions.room}"
+            const val roomTest = "androidx.room:room-testing:${Versions.room}"
+            const val roomPaging = "androidx.room:room-paging:${Versions.room}"
+        }
     }
 
     object DI {

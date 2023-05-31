@@ -1,9 +1,9 @@
-package pl.adrianczerwinski.onboarding
+package pl.adrianczerwinski.onboarding.welcome
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
-data class PageUiModel(
+data class WelcomePageUiModel(
     @DrawableRes val pageImage: Int,
     @StringRes val text: Int
 )

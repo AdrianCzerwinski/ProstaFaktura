@@ -5,8 +5,8 @@ import pl.adrianczerwinski.common.toCatchingResult
 import pl.adrianczerwinski.user.UserRepository
 import javax.inject.Inject
 
-class GetUserRegisteredUseCase @Inject constructor(
+class GetOnboardingShownUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    operator fun invoke(): Flow<Result<Boolean?>> = userRepository.getUserRegistered().toCatchingResult()
+    operator fun invoke(): Flow<Result<Boolean?>> = userRepository.getOnboardingShown().toCatchingResult()
 }

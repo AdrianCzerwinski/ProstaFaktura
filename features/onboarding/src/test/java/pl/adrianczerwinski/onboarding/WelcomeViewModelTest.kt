@@ -9,19 +9,20 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Test
-import pl.adrianczerwinski.onboarding.OnboardingUiAction.OpenSignIn
-import pl.adrianczerwinski.onboarding.OnboardingUiEvent.ButtonPressed
+import pl.adrianczerwinski.onboarding.welcome.OnboardingUiAction.OpenSignIn
+import pl.adrianczerwinski.onboarding.welcome.WelcomeUiEvent.ButtonPressed
+import pl.adrianczerwinski.onboarding.welcome.WelcomeViewModel
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalCoroutinesApi::class, ExperimentalTime::class)
-class OnboardingViewModelTest {
-    private lateinit var viewModel: OnboardingViewModel
+class WelcomeViewModelTest {
+    private lateinit var viewModel: WelcomeViewModel
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = OnboardingViewModel()
+        viewModel = WelcomeViewModel()
     }
 
     @Test
