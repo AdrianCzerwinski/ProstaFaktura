@@ -31,6 +31,8 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
     implementation(project(":domain:user"))
+    implementation(project(":domain:validation"))
+    implementation(project(":data:user"))
 
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.lifecycleRuntimeKtx)

@@ -5,4 +5,12 @@
     <string name="onboarding_text_2">Zaoszczędź czas i automatycznie wysyłaj fakturę mailem z poziomu aplikacji</string>
     <string name="onboarding_text_3">Aplikacja obsługuje rynek polski i niemiecki</string>
     <string name="open_sign_in">Do rejestracji</string>
+    <string name="user_info_disclaimer">Dane są przechowywane jedynie w pamięci telefonu i nikomu nieudostępniane</string>
+    <string name="user_info_header">By kontynować, musisz podać wymagane informacje</string>
+    <string name="company_info_header">Podaj dane swojej firmy</string>
+    <string name="confirm_info">Potwierdź dane</string>
+    <string name="add_others">Dodaj inne dane</string>
+    <string name="value">Wartość</string>
+    <string name="additional_company_info_header">Dodatkowa informacja o firmie:</string>
+    <string name="additional_company_infos_label">Dodatkowe informacje o firmie</string>
 </resources>

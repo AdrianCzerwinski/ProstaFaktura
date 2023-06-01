@@ -1,9 +1,5 @@
 package pl.adrianczerwinski.user.database.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class CompanyModel(
     val name: String,
     val taxNumber: String,
@@ -12,4 +8,4 @@ data class CompanyModel(
     val city: String,
     val postalCode: String,
     val others: Map<String, String>? = null
-) : Parcelable
+)

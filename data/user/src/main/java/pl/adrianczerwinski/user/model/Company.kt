@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class Company(
     val name: String,
     val taxNumber: String,
-    val accountNo: String,
+    val accountNumber: String,
     val streetAndNumber: String,
     val city: String,
     val postalCode: String,

@@ -21,12 +21,14 @@ object Versions {
     const val fonts = "1.4.3"
     const val composeLifecycle = "2.6.1"
     const val room = "2.5.1"
+    const val gson = "2.8.7"
 }
 
 object Dependencies {
     const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
     const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntimeKtx}"
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
 
     object Compose {
         const val bom = "androidx.compose:compose-bom:${Versions.bom}"

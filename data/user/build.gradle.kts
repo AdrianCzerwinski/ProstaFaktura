@@ -60,6 +60,7 @@ dependencies {
     annotationProcessor(Dependencies.Database.Room.roomCompiler)
     implementation(Dependencies.Database.Room.roomCoroutines)
     kapt(Dependencies.Database.Room.roomCompiler)
+    implementation(Dependencies.gson)
 
     implementation(Dependencies.Compose.runtime)
 }

@@ -27,13 +27,15 @@ fun ElevatedIconButton(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = MaterialTheme.typography.labelLarge,
     icon: ImageVector? = null,
+    enabled: Boolean = true,
     onClick: () -> Unit = {}
 ) = ElevatedButton(
     modifier = modifier
         .padding(16.dp)
         .fillMaxWidth(),
     onClick = onClick,
-    contentPadding = PaddingValues(12.dp)
+    contentPadding = PaddingValues(12.dp),
+    enabled = enabled
 ) {
     Box(modifier = Modifier.fillMaxWidth()) {
         Text(modifier = Modifier.align(Center), text = text, style = textStyle, color = MaterialTheme.colorScheme.onBackground)

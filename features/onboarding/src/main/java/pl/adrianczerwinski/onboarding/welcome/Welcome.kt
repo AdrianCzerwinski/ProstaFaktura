@@ -30,7 +30,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import pl.adrianczerwinski.common.HandleAction
 import pl.adrianczerwinski.onboarding.OnboardingFeatureNavigation
-import pl.adrianczerwinski.onboarding.welcome.OnboardingUiAction.OpenSignIn
+import pl.adrianczerwinski.onboarding.welcome.WelcomeUiAction.OpenMain
+import pl.adrianczerwinski.onboarding.welcome.WelcomeUiAction.OpenSignIn
 import pl.adrianczerwinski.onboarding.welcome.WelcomeUiEvent.ButtonPressed
 import pl.adrianczerwinski.prostafaktura.features.onboarding.R
 import pl.adrianczerwinski.ui.ScreenLightDarkPreview
@@ -55,6 +56,7 @@ fun Welcome(
     HandleAction(viewModel.actions) { action ->
         when (action) {
             OpenSignIn -> navigation.openUserInfo()
+            OpenMain -> navigation.openMainScreen()
         }
     }
 }

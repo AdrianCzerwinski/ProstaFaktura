@@ -1,9 +1,14 @@
 package pl.adrianczerwinski.onboarding.welcome
 
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import pl.adrianczerwinski.common.StateActionsViewModel
 import pl.adrianczerwinski.common.action
-import pl.adrianczerwinski.onboarding.welcome.OnboardingUiAction.OpenSignIn
+import pl.adrianczerwinski.domain.user.GetUserUseCase
+import pl.adrianczerwinski.onboarding.welcome.WelcomeUiAction.OpenMain
+import pl.adrianczerwinski.onboarding.welcome.WelcomeUiAction.OpenSignIn
 import pl.adrianczerwinski.onboarding.welcome.WelcomeUiEvent.ButtonPressed
 import pl.adrianczerwinski.prostafaktura.features.onboarding.R
 import javax.inject.Inject
@@ -27,8 +32,9 @@ data class WelcomeUiState(
     val pages: List<WelcomePageUiModel> = onboardingPages
 )
 
-sealed class OnboardingUiAction {
-    object OpenSignIn : OnboardingUiAction()
+sealed class WelcomeUiAction {
+    object OpenSignIn : WelcomeUiAction()
+    object OpenMain : WelcomeUiAction()
 }
 
 sealed class WelcomeUiEvent {
@@ -36,11 +42,24 @@ sealed class WelcomeUiEvent {
 }
 
 @HiltViewModel
-class WelcomeViewModel @Inject constructor() : StateActionsViewModel<WelcomeUiState, OnboardingUiAction>(WelcomeUiState()) {
+class WelcomeViewModel @Inject constructor(
+    private val getUserUseCase: GetUserUseCase
+) : StateActionsViewModel<WelcomeUiState, WelcomeUiAction>(WelcomeUiState()) {
 
     fun handleUiEvent(event: WelcomeUiEvent) {
         when (event) {
-            is ButtonPressed -> action(OpenSignIn)
+            is ButtonPressed -> onButtonPressed()
+        }
+    }
+
+    private fun onButtonPressed() = viewModelScope.launch {
+        getUserUseCase().collectLatest { result ->
+            if (result.isSuccess) {
+                val user = result.getOrNull()
+                user?.let { action(OpenMain) } ?: action(OpenSignIn)
+            } else {
+                action(OpenSignIn)
+            }
         }
     }
 }

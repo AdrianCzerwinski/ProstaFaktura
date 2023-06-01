@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name_placeholder">Jan Kowalski</string>
+    <string name="company_name_placeholder">Nazwa lub imię i nazwisko</string>
+    <string name="name">Nazwa</string>
+    <string name="full_name">Imię i nazwisko</string>
+    <string name="email_placeholder">email@email.com</string>
+    <string name="email">e-mail</string>
+    <string name="phone_placeholder">+48 600 000 000</string>
+    <string name="phone_number">Numer telefonu</string>
+    <string name="tax_number">Numer podatkowy</string>
+    <string name="account_number">Konto bankowe</string>
+    <string name="account_number_placeholder">PL10 0000 0000 0000 0000</string>
+    <string name="street_name">Ulica i numer</string>
+    <string name="city">Miasto</string>
+    <string name="postal_code">Kod pocztowy</string>
+    <string name="postal_code_placeholder">00–000</string>
+    <string name="error_value_message">Nieprawidłowe dane!</string>
+    <string name="generic_error_message">Coś poszło nie tak, spróbuj ponownie :(</string>
+    <string name="generic_error_button_label">Spróbuj ponownie</string>
+    <string name="add">Dodaj</string>
+    <string name="save">Zapisz</string>
+</resources>
