@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "pl.adrianczerwinski.prostafaktura.ui"
+    namespace = "pl.adrianczerwinski.prostafaktura.core.ui"
 
     composeOptions {
         kotlinCompilerExtensionVersion = AppData.kotlinCompilerExtensionVersion
@@ -41,6 +41,7 @@ dependencies {
     implementation(Dependencies.Compose.uiGraphics)
     implementation(Dependencies.Compose.uiToolingPreview)
     implementation(Dependencies.Compose.material3)
+    implementation(Dependencies.Google.fonts)
 
     implementation(Dependencies.Compose.navigation)
 

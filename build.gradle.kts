@@ -11,10 +11,11 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.10" apply false
     id("com.android.library") version "8.1.0-beta03" apply false
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("com.google.dagger.hilt.android") version Versions.hilt apply false
     `kotlin-dsl`
 }
 
-subprojects {
+allprojects {
     project.plugins.applyBaseConfig(project)
     apply(plugin = Plugins.ktlint)
     apply(plugin = Plugins.detekt)
@@ -27,9 +28,24 @@ subprojects {
         buildUponDefaultConfig = true
     }
 
-
     tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
         jvmTarget = AppData.jvmTarget
+    }
+
+    buildscript {
+        repositories {
+            maven(Plugins.maven)
+        }
+        dependencies {
+            classpath(Dependencies.CleanCode.ktlint)
+            classpath(Dependencies.DI.hiltPlugin)
+        }
+    }
+
+    tasks.withType<KotlinCompile>().all {
+        kotlinOptions {
+            jvmTarget = AppData.jvmTarget
+        }
     }
 }
 
@@ -39,6 +55,7 @@ buildscript {
     }
     dependencies {
         classpath(Dependencies.CleanCode.ktlint)
+        classpath(Dependencies.DI.hiltPlugin)
     }
 }
 
@@ -59,7 +76,7 @@ fun BaseExtension.baseConfig() {
 
     buildTypes {
         getByName("debug") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             isDebuggable = true
         }
         getByName("release") {
@@ -71,15 +88,10 @@ fun BaseExtension.baseConfig() {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    tasks.withType<KotlinCompile>().all {
-        kotlinOptions {
-            jvmTarget = AppData.jvmTarget
-        }
     }
 
     buildFeatures.compose = true

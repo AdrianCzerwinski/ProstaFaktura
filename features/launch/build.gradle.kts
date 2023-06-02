@@ -1,10 +1,14 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 android {
-    namespace = "pl.adrianczerwinski.prostafaktura.launch"
+    namespace = "pl.adrianczerwinski.prostafaktura.features.launch"
 
     composeOptions {
         kotlinCompilerExtensionVersion = AppData.kotlinCompilerExtensionVersion
@@ -18,13 +22,15 @@ android {
         jvmTarget = AppData.jvmTarget
     }
 
-    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    tasks.withType<Detekt>().configureEach {
         jvmTarget = AppData.jvmTarget
     }
 }
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":domain:user"))
 
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.lifecycleRuntimeKtx)
@@ -38,12 +44,16 @@ dependencies {
 
     implementation(Dependencies.Compose.navigation)
 
-    testImplementation(Dependencies.Test.junit)
+    implementation(Dependencies.DI.hiltComposeNavigation)
+    implementation(Dependencies.DI.hilt)
+    kapt(Dependencies.DI.hiltCompiler)
+    kapt(Dependencies.DI.hiltCoreCompiler)
 
-    androidTestImplementation(Dependencies.Test.AndroidXTest.extJunit)
-    androidTestImplementation(Dependencies.Test.AndroidXTest.espressoCore)
-    androidTestImplementation(platform(Dependencies.Compose.bom))
-    androidTestImplementation(Dependencies.Compose.uiTestJUnit4)
+    testImplementation(Dependencies.Test.junit)
+    testImplementation(Dependencies.Test.mockk)
+    testImplementation(Dependencies.Test.coroutinesTest)
+    testImplementation(Dependencies.Test.turbine)
+    testImplementation(Dependencies.Test.truth)
 
     debugImplementation(Dependencies.Compose.uiTooling)
     debugImplementation(Dependencies.Compose.uiTestManifest)
