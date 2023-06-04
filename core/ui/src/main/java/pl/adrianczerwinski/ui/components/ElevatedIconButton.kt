@@ -54,6 +54,6 @@ fun ElevatedIconButton(
 
 @Preview
 @Composable
-fun ElevatedIconButtonPreview() = ProstaFakturaTheme(dynamicColor = false) {
+fun elevatedIconButtonPreview() = ProstaFakturaTheme(dynamicColor = false) {
     ElevatedIconButton(text = "Sample", icon = Icons.Default.AccountCircle)
 }

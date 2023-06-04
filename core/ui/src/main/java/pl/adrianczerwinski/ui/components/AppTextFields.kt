@@ -48,7 +48,7 @@ fun AppTextField(
     minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = TextFieldDefaults.shape,
-    colors: TextFieldColors = getTextFieldColors()
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors()
 ) = Column {
     TextField(
         value = state.value,
@@ -72,8 +72,8 @@ fun AppTextField(
         minLines = minLines,
         interactionSource = interactionSource,
         shape = shape,
-        colors = colors,
-        singleLine = singleLine
+        singleLine = singleLine,
+        colors = colors
     )
     state.errorMessage?.let { Text(text = it, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error) }
 }
@@ -102,7 +102,7 @@ fun OutlinedAppTextField(
     minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = OutlinedTextFieldDefaults.shape,
-    colors: TextFieldColors = getOutlinedTextFieldColors()
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors()
 ) = Column {
     OutlinedTextField(
         value = state.value,
@@ -126,59 +126,11 @@ fun OutlinedAppTextField(
         minLines = minLines,
         interactionSource = interactionSource,
         shape = shape,
-        colors = colors,
-        singleLine = singleLine
+        singleLine = singleLine,
+        colors = colors
     )
     state.errorMessage?.let { Text(text = it, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error) }
 }
-
-@Composable
-private fun getTextFieldColors() = TextFieldDefaults.colors(
-    focusedTextColor = MaterialTheme.colorScheme.background,
-    disabledTextColor = MaterialTheme.colorScheme.background,
-    focusedSupportingTextColor = MaterialTheme.colorScheme.background,
-    disabledSupportingTextColor = MaterialTheme.colorScheme.background,
-    unfocusedTextColor = MaterialTheme.colorScheme.background,
-    cursorColor = MaterialTheme.colorScheme.background,
-    unfocusedContainerColor = MaterialTheme.colorScheme.primary,
-    focusedContainerColor = MaterialTheme.colorScheme.primary,
-    errorContainerColor = MaterialTheme.colorScheme.primary,
-    errorTextColor = MaterialTheme.colorScheme.background,
-    disabledPlaceholderColor = MaterialTheme.colorScheme.tertiary,
-    errorPlaceholderColor = MaterialTheme.colorScheme.tertiary,
-    focusedPlaceholderColor = MaterialTheme.colorScheme.tertiary,
-    unfocusedPlaceholderColor = MaterialTheme.colorScheme.tertiary,
-    disabledLabelColor = MaterialTheme.colorScheme.background,
-    errorLabelColor = MaterialTheme.colorScheme.background,
-    focusedLabelColor = MaterialTheme.colorScheme.background,
-    unfocusedLabelColor = MaterialTheme.colorScheme.background
-)
-
-@Composable
-private fun getOutlinedTextFieldColors() = OutlinedTextFieldDefaults.colors(
-    focusedTextColor = MaterialTheme.colorScheme.onBackground,
-    disabledTextColor = MaterialTheme.colorScheme.onBackground,
-    focusedSupportingTextColor = MaterialTheme.colorScheme.onBackground,
-    disabledSupportingTextColor = MaterialTheme.colorScheme.onBackground,
-    unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
-    cursorColor = MaterialTheme.colorScheme.onBackground,
-    unfocusedContainerColor = MaterialTheme.colorScheme.background,
-    focusedContainerColor = MaterialTheme.colorScheme.background,
-    errorContainerColor = MaterialTheme.colorScheme.background,
-    errorTextColor = MaterialTheme.colorScheme.onBackground,
-    disabledPlaceholderColor = MaterialTheme.colorScheme.onBackground,
-    errorPlaceholderColor = MaterialTheme.colorScheme.onBackground,
-    focusedPlaceholderColor = MaterialTheme.colorScheme.onBackground,
-    unfocusedPlaceholderColor = MaterialTheme.colorScheme.onBackground,
-    disabledLabelColor = MaterialTheme.colorScheme.onBackground,
-    errorLabelColor = MaterialTheme.colorScheme.onBackground,
-    focusedLabelColor = MaterialTheme.colorScheme.onBackground,
-    unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
-    disabledBorderColor = MaterialTheme.colorScheme.onBackground,
-    errorBorderColor = MaterialTheme.colorScheme.error,
-    focusedBorderColor = MaterialTheme.colorScheme.onBackground,
-    unfocusedBorderColor = MaterialTheme.colorScheme.onBackground
-)
 
 @LightDarkPreview
 @Composable
