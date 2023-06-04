@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/domain/validation" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/launch" />
+            <option value="$PROJECT_DIR$/features/main" />
             <option value="$PROJECT_DIR$/features/onboarding" />
           </set>
         </option>

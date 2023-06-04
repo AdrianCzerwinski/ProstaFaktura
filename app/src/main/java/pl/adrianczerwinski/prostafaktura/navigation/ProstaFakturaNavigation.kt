@@ -14,19 +14,30 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import pl.adrianczerwinski.launch.Launch
 import pl.adrianczerwinski.launch.LaunchFeatureNavigation
+import pl.adrianczerwinski.main.Main
+import pl.adrianczerwinski.main.MainFeatureNavigation
 import pl.adrianczerwinski.onboarding.OnboardingFeatureNavigation
 import pl.adrianczerwinski.onboarding.signin.SignIn
 import pl.adrianczerwinski.onboarding.welcome.Welcome
+import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Client
+import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Invoice
 import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Launch
-import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Main
+import pl.adrianczerwinski.prostafaktura.navigation.Destinations.MainDestination
 import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Onboarding
+import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Settings
 
 @Composable
 fun ProstaFakturaNavigation(navController: NavHostController) {
     val launchFeatureNavigation: LaunchFeatureNavigation = LaunchFeatureNavigationImpl(navController)
     val onboardingFeatureNavigationImpl: OnboardingFeatureNavigation = OnboardingFeatureNavigationImpl(navController)
+    val mainFeatureNavigationImpl: MainFeatureNavigation = MainFeatureNavigationImpl(navController)
 
-    Surface(modifier = Modifier.fillMaxSize().systemBarsPadding().navigationBarsPadding()) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .systemBarsPadding()
+            .navigationBarsPadding()
+    ) {
         NavHost(
             modifier = Modifier.background(MaterialTheme.colorScheme.background),
             navController = navController,
@@ -45,11 +56,33 @@ fun ProstaFakturaNavigation(navController: NavHostController) {
             }
 
             navigation(
-                startDestination = Main.MAIN_HOME,
-                route = Main.ROUTE
+                startDestination = MainDestination.MAIN_HOME,
+                route = MainDestination.ROUTE
             ) {
-                composable(Main.MAIN_HOME) {}
-                composable(Main.MAIN_INFO) {}
+                composable(MainDestination.MAIN_HOME) {
+                    Main(navigation = mainFeatureNavigationImpl)
+                }
+            }
+
+            navigation(
+                startDestination = Settings.SETTINGS_MAIN,
+                route = Settings.ROUTE
+            ) {
+                composable(Settings.SETTINGS_MAIN) {}
+            }
+
+            navigation(
+                startDestination = Invoice.INVOICE_CREATE,
+                route = Invoice.ROUTE
+            ) {
+                composable(Invoice.INVOICE_CREATE) {}
+            }
+
+            navigation(
+                startDestination = Client.CLIENT_ADD,
+                route = Client.ROUTE
+            ) {
+                composable(Client.CLIENT_ADD) {}
             }
         }
     }
@@ -67,10 +100,23 @@ object Destinations {
         const val SIGN_IN = "onboarding_user_info"
     }
 
-    object Main {
+    object MainDestination {
         const val ROUTE = "main"
-
         const val MAIN_HOME = "main_home"
-        const val MAIN_INFO = "main_info"
+    }
+
+    object Settings {
+        const val ROUTE = "settings"
+        const val SETTINGS_MAIN = "settings_main"
+    }
+
+    object Invoice {
+        const val ROUTE = "invoice"
+        const val INVOICE_CREATE = "invoice_CREATE"
+    }
+
+    object Client {
+        const val ROUTE = "client"
+        const val CLIENT_ADD = "client_add"
     }
 }

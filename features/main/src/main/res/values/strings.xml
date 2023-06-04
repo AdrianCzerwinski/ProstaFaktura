@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_invoice">Utwórz fakturę</string>
+    <string name="add_client">Dodaj klienta</string>
+</resources>

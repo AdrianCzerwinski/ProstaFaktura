@@ -8,7 +8,7 @@ class OnboardingFeatureNavigationImpl(
 ) : OnboardingFeatureNavigation {
     override fun openSignIn() = navController.navigate(Destinations.Onboarding.SIGN_IN)
 
-    override fun openMainScreen() = navController.navigate(Destinations.Main.ROUTE) {
+    override fun openMainScreen() = navController.navigate(Destinations.MainDestination.ROUTE) {
         popUpTo(Destinations.Onboarding.ROUTE) { inclusive = true }
     }
 }

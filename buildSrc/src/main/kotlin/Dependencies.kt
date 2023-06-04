@@ -22,6 +22,7 @@ object Versions {
     const val composeLifecycle = "2.6.1"
     const val room = "2.5.1"
     const val gson = "2.8.7"
+    const val accompanist = "0.30.1"
 }
 
 object Dependencies {
@@ -42,6 +43,8 @@ object Dependencies {
         const val navigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
         const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
         const val lifeCycle = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.composeLifecycle}"
+        const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:${Versions.accompanist}"
+        const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
     }
 
     object Test {
@@ -49,8 +52,7 @@ object Dependencies {
         const val mockk = "io.mockk:mockk:${Versions.mockk}"
         const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
         const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesTest}"
-        const val truth = "com.google.truth:truth:${Versions.truth
-        }"
+        const val truth = "com.google.truth:truth:${Versions.truth}"
 
         object AndroidXTest {
             const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCore}"

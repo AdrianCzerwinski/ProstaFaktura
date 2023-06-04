@@ -1,35 +1,35 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
 }
 
-detekt {
-    toolVersion = Versions.detekt
-    config = files("$rootDir/gradle/detekt-config.yml")
-    parallel = true
-
-    buildUponDefaultConfig = true
-}
-
 android {
-    namespace = "pl.adrianczerwinski.prostafaktura"
+    namespace = "pl.adrianczerwinski.prostafaktura.features.main"
 
     composeOptions {
         kotlinCompilerExtensionVersion = AppData.kotlinCompilerExtensionVersion
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    kotlinOptions {
+        jvmTarget = AppData.jvmTarget
+    }
 
-    defaultConfig.applicationId = AppData.applicationId
+    tasks.withType<Detekt>().configureEach {
+        jvmTarget = AppData.jvmTarget
+    }
 }
 
 dependencies {
-
-    implementation(project(":features:launch"))
-    implementation(project(":features:onboarding"))
-    implementation(project(":features:main"))
     implementation(project(":core:ui"))
+    implementation(project(":core:common"))
 
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.lifecycleRuntimeKtx)
@@ -40,26 +40,21 @@ dependencies {
     implementation(Dependencies.Compose.uiGraphics)
     implementation(Dependencies.Compose.uiToolingPreview)
     implementation(Dependencies.Compose.material3)
-    implementation(Dependencies.Compose.runtime)
-    implementation(Dependencies.Compose.systemUiController)
 
     implementation(Dependencies.Compose.navigation)
+    implementation(Dependencies.Compose.navigationAnimation)
 
+    implementation(Dependencies.DI.hiltComposeNavigation)
     implementation(Dependencies.DI.hilt)
     kapt(Dependencies.DI.hiltCompiler)
     kapt(Dependencies.DI.hiltCoreCompiler)
 
     testImplementation(Dependencies.Test.junit)
-
-    androidTestImplementation(Dependencies.Test.AndroidXTest.extJunit)
-    androidTestImplementation(Dependencies.Test.AndroidXTest.espressoCore)
-    androidTestImplementation(platform(Dependencies.Compose.bom))
-    androidTestImplementation(Dependencies.Compose.uiTestJUnit4)
+    testImplementation(Dependencies.Test.mockk)
+    testImplementation(Dependencies.Test.coroutinesTest)
+    testImplementation(Dependencies.Test.turbine)
+    testImplementation(Dependencies.Test.truth)
 
     debugImplementation(Dependencies.Compose.uiTooling)
     debugImplementation(Dependencies.Compose.uiTestManifest)
-}
-
-kapt {
-    correctErrorTypes = true
 }
