@@ -17,6 +17,7 @@ rootProject.name = "Prosta Faktura"
 include(":app")
 include(":features:launch")
 include(":features:onboarding")
+include(":features:main")
 include(":core:ui")
 include(":core:common")
 include(":data:user")

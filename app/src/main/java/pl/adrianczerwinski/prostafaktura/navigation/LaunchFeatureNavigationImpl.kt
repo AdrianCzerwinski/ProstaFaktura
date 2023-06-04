@@ -10,7 +10,7 @@ class LaunchFeatureNavigationImpl(
         popUpTo(Destinations.Launch.ROUTE) { inclusive = true }
     }
 
-    override fun openMainScreen() = navController.navigate(Destinations.Main.ROUTE) {
+    override fun openMainScreen() = navController.navigate(Destinations.MainDestination.ROUTE) {
         popUpTo(Destinations.Launch.ROUTE) { inclusive = true }
     }
 }
