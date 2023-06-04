@@ -55,7 +55,7 @@ fun Welcome(
 
     HandleAction(viewModel.actions) { action ->
         when (action) {
-            OpenSignIn -> navigation.openUserInfo()
+            OpenSignIn -> navigation.openSignIn()
             OpenMain -> navigation.openMainScreen()
         }
     }

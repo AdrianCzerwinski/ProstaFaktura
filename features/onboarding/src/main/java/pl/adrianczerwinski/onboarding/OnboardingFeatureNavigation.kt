@@ -1,6 +1,6 @@
 package pl.adrianczerwinski.onboarding
 
 interface OnboardingFeatureNavigation {
-    fun openUserInfo()
+    fun openSignIn()
     fun openMainScreen()
 }
