@@ -1,7 +1,6 @@
 package pl.adrianczerwinski.onboarding.signin
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,7 +12,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -62,6 +60,7 @@ import pl.adrianczerwinski.prostafaktura.features.onboarding.R
 import pl.adrianczerwinski.ui.ScreenLightDarkPreview
 import pl.adrianczerwinski.ui.ScreenPreview
 import pl.adrianczerwinski.ui.components.AppTextField
+import pl.adrianczerwinski.ui.components.BottomBarWithButton
 import pl.adrianczerwinski.ui.components.ElevatedIconButton
 import pl.adrianczerwinski.ui.components.InfoRow
 import pl.adrianczerwinski.ui.components.OutlinedAppTextField
@@ -97,18 +96,10 @@ private fun SignInScreen(
     uiEvent: (SignInUiEvent) -> Unit = {}
 ) = Scaffold(
     bottomBar = {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.background),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Divider(color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), thickness = 1.dp)
-            ElevatedIconButton(text = stringResource(R.string.confirm_info)) {
-                when (uiState.screenType) {
-                    USER -> uiEvent(ConfirmUserInfoPressed)
-                    COMPANY -> uiEvent(ConfirmCompanyInfoPressed)
-                }
+        BottomBarWithButton(buttonText = stringResource(R.string.confirm_info)) {
+            when (uiState.screenType) {
+                USER -> uiEvent(ConfirmUserInfoPressed)
+                COMPANY -> uiEvent(ConfirmCompanyInfoPressed)
             }
         }
     }
@@ -321,7 +312,7 @@ private fun CompanyHeader() {
 @Composable
 private fun CompanyAdditionalInfo(info: Map<String, String>) {
     SpacerMedium()
-    InfoRow(key = stringResource(id = R.string.additional_company_infos_label), value = "")
+    InfoRow(key = stringResource(id = uiR.string.additional_company_info_header), value = "")
     info.forEach {
         SpacerMedium()
         InfoRow(key = it.key, value = it.value)
@@ -349,7 +340,7 @@ private fun BottomSheets(
             ) {
                 val focusManager = LocalFocusManager.current
                 Text(
-                    text = stringResource(R.string.additional_company_info_header),
+                    text = stringResource(uiR.string.additional_company_info_header),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -368,8 +359,8 @@ private fun BottomSheets(
                     modifier = Modifier.fillMaxWidth(),
                     state = newCompanyInfoValue,
                     onValueChange = { uiEvent(OthersValueChanged(it)) },
-                    label = stringResource(id = R.string.value),
-                    placeholder = stringResource(id = R.string.value),
+                    label = stringResource(id = uiR.string.value),
+                    placeholder = stringResource(id = uiR.string.value),
                     keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                     keyboardActions = KeyboardActions(onNext = { focusManager.clearFocus() }),
                 )

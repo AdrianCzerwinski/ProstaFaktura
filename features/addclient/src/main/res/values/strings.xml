@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_client_top_bar_title">Dodawanie nowego klienta</string>
+    <string name="go_to_clients_settings">Przejdź do ustawień klienta</string>
+    <string name="select_country">Wybierz kraj klienta</string>
+    <string name="person">Osoba prywatna</string>
+    <string name="company">Firma</string>
+    <string name="poland">Polska</string>
+    <string name="germany">Niemcy</string>
+    <string name="pick_currency">Wybierz walutę</string>
+    <string name="pick_language">Wybierz język</string>
+    <string name="german_language">j. niemiecki</string>
+    <string name="polish_language">j. polski</string>
+    <string name="successfully_added_client">Poprawnie dodano klienta</string>
+</resources>

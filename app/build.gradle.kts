@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":features:launch"))
     implementation(project(":features:onboarding"))
     implementation(project(":features:main"))
+    implementation(project(":features:addclient"))
     implementation(project(":core:ui"))
 
     implementation(Dependencies.coreKtx)

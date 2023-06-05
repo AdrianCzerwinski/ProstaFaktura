@@ -12,6 +12,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import pl.adrianczerwinski.addclient.AddClient
+import pl.adrianczerwinski.addclient.AddClientNavigation
 import pl.adrianczerwinski.launch.Launch
 import pl.adrianczerwinski.launch.LaunchFeatureNavigation
 import pl.adrianczerwinski.main.Main
@@ -31,6 +33,7 @@ fun ProstaFakturaNavigation(navController: NavHostController) {
     val launchFeatureNavigation: LaunchFeatureNavigation = LaunchFeatureNavigationImpl(navController)
     val onboardingFeatureNavigationImpl: OnboardingFeatureNavigation = OnboardingFeatureNavigationImpl(navController)
     val mainFeatureNavigationImpl: MainFeatureNavigation = MainFeatureNavigationImpl(navController)
+    val addClientFeatureNavigationImpl: AddClientNavigation = AddClientNavigationImpl(navController)
 
     Surface(
         modifier = Modifier
@@ -82,7 +85,7 @@ fun ProstaFakturaNavigation(navController: NavHostController) {
                 startDestination = Client.CLIENT_ADD,
                 route = Client.ROUTE
             ) {
-                composable(Client.CLIENT_ADD) {}
+                composable(Client.CLIENT_ADD) { AddClient(addClientFeatureNavigationImpl) }
             }
         }
     }

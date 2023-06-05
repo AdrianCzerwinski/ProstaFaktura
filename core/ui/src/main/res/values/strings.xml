@@ -12,7 +12,9 @@
     <string name="account_number">Konto bankowe</string>
     <string name="account_number_placeholder">PL10 0000 0000 0000 0000</string>
     <string name="street_name">Ulica i numer</string>
+    <string name="street_name_placeholder">Warzywna 9/23</string>
     <string name="city">Miasto</string>
+    <string name="city_placeholder">Katowice</string>
     <string name="postal_code">Kod pocztowy</string>
     <string name="postal_code_placeholder">00–000</string>
     <string name="error_value_message">Nieprawidłowe dane!</string>
@@ -20,4 +22,6 @@
     <string name="generic_error_button_label">Spróbuj ponownie</string>
     <string name="add">Dodaj</string>
     <string name="save">Zapisz</string>
+    <string name="value">Wartość</string>
+    <string name="additional_company_info_header">Dodatkowa informacja o firmie:</string>
 </resources>
