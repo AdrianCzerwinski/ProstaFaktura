@@ -17,11 +17,14 @@
             <option value="$PROJECT_DIR$/core/common" />
             <option value="$PROJECT_DIR$/core/ui" />
             <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/data/client" />
             <option value="$PROJECT_DIR$/data/user" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/client" />
             <option value="$PROJECT_DIR$/domain/user" />
             <option value="$PROJECT_DIR$/domain/validation" />
             <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/addclient" />
             <option value="$PROJECT_DIR$/features/launch" />
             <option value="$PROJECT_DIR$/features/main" />
             <option value="$PROJECT_DIR$/features/onboarding" />

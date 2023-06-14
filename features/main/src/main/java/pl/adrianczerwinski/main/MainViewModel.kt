@@ -37,10 +37,20 @@ class MainViewModel @Inject constructor() : StateActionsViewModel<MainUiState, M
     fun handleUiEvent(event: MainUiEvent) {
         when (event) {
             AddButtonPressed -> updateState { copy(showBottomSheetPicker = true) }
-            AddClientPressed -> action(OpenNewClient)
+            AddClientPressed -> onAddClientPressed()
             CloseBottomSheet -> updateState { copy(showBottomSheetPicker = false) }
-            CreateInvoicePressed -> action(OpenNewInvoice)
+            CreateInvoicePressed -> onCreateInvoicePressed()
             SettingsPressed -> action(OpenSettings)
         }
+    }
+
+    private fun onAddClientPressed() {
+        updateState { copy(showBottomSheetPicker = false) }
+        action(OpenNewClient)
+    }
+
+    private fun onCreateInvoicePressed() {
+        updateState { copy(showBottomSheetPicker = false) }
+        action(OpenNewInvoice)
     }
 }

@@ -62,6 +62,7 @@ import pl.adrianczerwinski.prostafaktura.features.onboarding.R
 import pl.adrianczerwinski.ui.ScreenLightDarkPreview
 import pl.adrianczerwinski.ui.ScreenPreview
 import pl.adrianczerwinski.ui.components.AppTextField
+import pl.adrianczerwinski.ui.components.BottomBarWithButton
 import pl.adrianczerwinski.ui.components.ElevatedIconButton
 import pl.adrianczerwinski.ui.components.InfoRow
 import pl.adrianczerwinski.ui.components.OutlinedAppTextField
@@ -97,18 +98,10 @@ private fun SignInScreen(
     uiEvent: (SignInUiEvent) -> Unit = {}
 ) = Scaffold(
     bottomBar = {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.background),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Divider(color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), thickness = 1.dp)
-            ElevatedIconButton(text = stringResource(R.string.confirm_info)) {
-                when (uiState.screenType) {
-                    USER -> uiEvent(ConfirmUserInfoPressed)
-                    COMPANY -> uiEvent(ConfirmCompanyInfoPressed)
-                }
+        BottomBarWithButton(buttonText = stringResource(R.string.confirm_info)) {
+            when (uiState.screenType) {
+                USER -> uiEvent(ConfirmUserInfoPressed)
+                COMPANY -> uiEvent(ConfirmCompanyInfoPressed)
             }
         }
     }
