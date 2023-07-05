@@ -36,7 +36,9 @@ internal fun ClientModel.toClient() = Client(
     emails = this.emails,
     phoneNumber = this.phoneNumber,
     others = this.others,
-    language = this.language
+    language = this.language,
+    currency = this.currency,
+    country = this.country
 )
 
 internal fun Client.toModel() = ClientModel(
@@ -48,5 +50,7 @@ internal fun Client.toModel() = ClientModel(
     phoneNumber = this.phoneNumber,
     emails = this.emails,
     others = this.others,
-    language = this.language
+    language = this.language,
+    currency = this.currency,
+    country = this.country
 )

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "63c87a46c5ecab028693aafc56463107",
+    "identityHash": "49878f707fd2c6ed98b1f63c741bf899",
     "entities": [
       {
         "tableName": "client",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`taxNumber` TEXT NOT NULL, `name` TEXT NOT NULL, `streetAndNumber` TEXT NOT NULL, `city` TEXT NOT NULL, `postalCode` TEXT NOT NULL, `emails` TEXT, `phoneNumber` TEXT NOT NULL, `others` TEXT, `language` TEXT NOT NULL, PRIMARY KEY(`taxNumber`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`taxNumber` TEXT NOT NULL, `name` TEXT NOT NULL, `streetAndNumber` TEXT NOT NULL, `city` TEXT NOT NULL, `postalCode` TEXT NOT NULL, `emails` TEXT, `phoneNumber` TEXT NOT NULL, `others` TEXT, `language` TEXT NOT NULL, `currency` TEXT NOT NULL, `country` TEXT NOT NULL, PRIMARY KEY(`taxNumber`))",
         "fields": [
           {
             "fieldPath": "taxNumber",
@@ -61,6 +61,18 @@
             "columnName": "language",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "currency",
+            "columnName": "currency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -76,7 +88,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '63c87a46c5ecab028693aafc56463107')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '49878f707fd2c6ed98b1f63c741bf899')"
     ]
   }
 }

@@ -10,7 +10,7 @@ import javax.inject.Inject
 class SaveClientUseCase @Inject constructor(
     private val clientRepository: ClientRepository,
 ) {
-    suspend operator fun invoke(client: Client) = withContext(Dispatchers.IO)  {
+    suspend operator fun invoke(client: Client) = withContext(Dispatchers.IO) {
         resultOf {
             clientRepository.saveClient(client)
         }

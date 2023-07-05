@@ -13,5 +13,7 @@ data class Client(
     val emails: List<String>? = null,
     val phoneNumber: String,
     val others: Map<String, String>? = null,
-    val language: String
+    val language: String,
+    val currency: String,
+    val country: String
 ) : Parcelable

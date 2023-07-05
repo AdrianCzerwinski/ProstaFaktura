@@ -29,11 +29,17 @@ fun AppTopBar(
     onClick: () -> Unit = {}
 ) = Surface(modifier = Modifier.fillMaxWidth(), shadowElevation = 4.dp) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 8.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.clip(CircleShape).clickable { onClick() }.padding(12.dp).size(32.dp),
+            modifier = Modifier
+                .clip(CircleShape)
+                .clickable { onClick() }
+                .padding(12.dp)
+                .size(32.dp),
             imageVector = leadingIcon,
             contentDescription = "Back Arrow Icon"
         )

@@ -22,4 +22,6 @@
     <string name="generic_error_button_label">Spróbuj ponownie</string>
     <string name="add">Dodaj</string>
     <string name="save">Zapisz</string>
+    <string name="value">Wartość</string>
+    <string name="additional_company_info_header">Dodatkowa informacja o firmie:</string>
 </resources>

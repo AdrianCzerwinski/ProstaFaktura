@@ -3,6 +3,9 @@ package pl.adrianczerwinski.addclient
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,8 +16,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -35,17 +40,35 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import pl.adrianczerwinski.addclient.AddClientUiAction.CloseAddClientFlow
 import pl.adrianczerwinski.addclient.AddClientUiEvent.BackPressed
 import pl.adrianczerwinski.addclient.AddClientUiEvent.CityChanged
-import pl.adrianczerwinski.addclient.AddClientUiEvent.NameChanged
+import pl.adrianczerwinski.addclient.AddClientUiEvent.CloseBottomSheet
 import pl.adrianczerwinski.addclient.AddClientUiEvent.CompanyTypePressed
 import pl.adrianczerwinski.addclient.AddClientUiEvent.CountrySelected
+import pl.adrianczerwinski.addclient.AddClientUiEvent.CurrencySelected
+import pl.adrianczerwinski.addclient.AddClientUiEvent.DeleteOtherInfo
 import pl.adrianczerwinski.addclient.AddClientUiEvent.EmailChanged
+import pl.adrianczerwinski.addclient.AddClientUiEvent.LanguageSelected
+import pl.adrianczerwinski.addclient.AddClientUiEvent.NameChanged
+import pl.adrianczerwinski.addclient.AddClientUiEvent.OnAddOthersPressed
 import pl.adrianczerwinski.addclient.AddClientUiEvent.OpenClientSettingsPressed
+import pl.adrianczerwinski.addclient.AddClientUiEvent.OthersKeyChanged
+import pl.adrianczerwinski.addclient.AddClientUiEvent.OthersValueChanged
 import pl.adrianczerwinski.addclient.AddClientUiEvent.PersonTypePressed
 import pl.adrianczerwinski.addclient.AddClientUiEvent.PostalCodeChanged
+import pl.adrianczerwinski.addclient.AddClientUiEvent.SaveOthersPressed
 import pl.adrianczerwinski.addclient.AddClientUiEvent.SavePressed
 import pl.adrianczerwinski.addclient.AddClientUiEvent.StreetAndNumberChanged
 import pl.adrianczerwinski.addclient.AddClientUiEvent.TaxNumberChanged
+import pl.adrianczerwinski.addclient.AddClientUiEvent.TryAgainPressed
+import pl.adrianczerwinski.addclient.AddClientUiState.BottomSheet
+import pl.adrianczerwinski.addclient.AddClientUiState.BottomSheet.Error
+import pl.adrianczerwinski.addclient.AddClientUiState.BottomSheet.Others
 import pl.adrianczerwinski.addclient.AddClientUiState.ClientCountry
+import pl.adrianczerwinski.addclient.AddClientUiState.ClientCountry.GERMANY
+import pl.adrianczerwinski.addclient.AddClientUiState.ClientCountry.POLAND
+import pl.adrianczerwinski.addclient.AddClientUiState.ClientCurrency
+import pl.adrianczerwinski.addclient.AddClientUiState.ClientLanguage
+import pl.adrianczerwinski.addclient.AddClientUiState.ClientLanguage.GERMAN
+import pl.adrianczerwinski.addclient.AddClientUiState.ClientLanguage.POLISH
 import pl.adrianczerwinski.addclient.AddClientUiState.ClientType
 import pl.adrianczerwinski.addclient.AddClientUiState.ClientType.COMPANY
 import pl.adrianczerwinski.addclient.AddClientUiState.ClientType.PERSON
@@ -59,10 +82,17 @@ import pl.adrianczerwinski.ui.ScreenPreview
 import pl.adrianczerwinski.ui.components.AppTextField
 import pl.adrianczerwinski.ui.components.AppTopBar
 import pl.adrianczerwinski.ui.components.BottomBarWithButton
+import pl.adrianczerwinski.ui.components.ElevatedIconButton
+import pl.adrianczerwinski.ui.components.InfoRow
+import pl.adrianczerwinski.ui.components.OutlinedAppTextField
+import pl.adrianczerwinski.ui.components.RoundedElevatedIcon
 import pl.adrianczerwinski.ui.components.SelectionDropDown
 import pl.adrianczerwinski.ui.components.SpacerLarge
 import pl.adrianczerwinski.ui.components.SpacerMedium
+import pl.adrianczerwinski.ui.components.SpacerSmall
 import pl.adrianczerwinski.ui.components.SpacerType
+import pl.adrianczerwinski.ui.components.bottomsheets.AppModalBottomSheet
+import pl.adrianczerwinski.ui.components.bottomsheets.GenericErrorBottomSheet
 import pl.adrianczerwinski.ui.models.TextFieldState
 import pl.adrianczerwinski.prostafaktura.core.ui.R as uiR
 
@@ -77,6 +107,13 @@ fun AddClient(
 
     AddClientScreen(uiState = uiState, uiEvent = viewModel::handleUiEvent)
 
+    BottomSheets(
+        bottomSheet = uiState.bottomSheet,
+        newCompanyInfoKey = uiState.newOthersKey,
+        newCompanyInfoValue = uiState.newOthersValue,
+        uiEvent = viewModel::handleUiEvent
+    )
+
     HandleAction(viewModel.actions) { action ->
         when (action) {
             CloseAddClientFlow -> navigation.closeAddClientFlow()
@@ -90,16 +127,19 @@ private fun AddClientScreen(
     uiState: AddClientUiState,
     uiEvent: (AddClientUiEvent) -> Unit = {}
 ) {
-    val focusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = { AppTopBar(title = stringResource(R.string.add_client_top_bar_title)) { uiEvent(BackPressed) } },
         bottomBar = {
             BottomBarWithButton(
-                buttonText = stringResource(R.string.go_to_settings),
+                buttonText = stringResource(
+                    when (uiState.screenType) {
+                        CLIENT_DATA -> R.string.go_to_clients_settings
+                        CLIENT_SETTINGS -> uiR.string.save
+                    }
+                ),
                 textStyle = MaterialTheme.typography.labelMedium
             ) {
-                focusManager.clearFocus()
                 when (uiState.screenType) {
                     CLIENT_DATA -> uiEvent(OpenClientSettingsPressed)
                     CLIENT_SETTINGS -> uiEvent(SavePressed)
@@ -114,36 +154,41 @@ private fun AddClientScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             SpacerLarge()
-            if (uiState.screenType == CLIENT_DATA) ClientTypePicker(uiEvent = uiEvent, clientType = uiState.clientType)
-            ElevatedCard(
-                modifier = Modifier
-                    .padding(24.dp)
-                    .fillMaxWidth(),
-                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp)
-            ) {
-                AnimatedContent(uiState.screenType, label = "") {
-                    when (uiState.screenType) {
-                        CLIENT_DATA -> {
-                            DataFormFields(
-                                companyName = uiState.name,
-                                taxNumber = uiState.taxNumber,
-                                city = uiState.city,
-                                streetAndNumber = uiState.streetAndNumber,
-                                postalCode = uiState.postalCode,
-                                uiEvent = uiEvent,
-                                email = uiState.email,
-                                clientType = uiState.clientType
-                            )
-                        }
 
-                        CLIENT_SETTINGS -> ClientSettings(uiEvent = uiEvent, countries = uiState.countryList)
-                    }
+            if (uiState.screenType == CLIENT_DATA) ClientTypePicker(uiEvent = uiEvent, clientType = uiState.clientType)
+
+            AnimatedContent(
+                targetState = uiState.screenType,
+                label = "",
+                transitionSpec = { fadeIn() with fadeOut() }
+            ) {
+                when (uiState.screenType) {
+
+                    CLIENT_DATA -> DataFormFields(
+                        companyName = uiState.name,
+                        taxNumber = uiState.taxNumber,
+                        city = uiState.city,
+                        streetAndNumber = uiState.streetAndNumber,
+                        postalCode = uiState.postalCode,
+                        uiEvent = uiEvent,
+                        email = uiState.email,
+                        clientType = uiState.clientType
+                    )
+
+                    CLIENT_SETTINGS -> ClientSettings(
+                        uiEvent = uiEvent,
+                        countries = uiState.countryList,
+                        currencies = uiState.currencyList,
+                        languages = uiState.languageList,
+                        otherClientInfo = uiState.others
+                    )
                 }
             }
         }
     }
 }
 
+@Suppress("LongMethod")
 @Composable
 private fun DataFormFields(
     companyName: TextFieldState,
@@ -156,6 +201,7 @@ private fun DataFormFields(
     clientType: ClientType
 ) = Column(
     modifier = Modifier
+        .padding(12.dp)
         .fillMaxWidth(),
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center
@@ -270,8 +316,7 @@ private fun ClientTypePicker(
         ),
         selected = clientType == PERSON,
         onClick = { uiEvent(PersonTypePressed) },
-        label = { Text(text = "Osoba prywatna", style = MaterialTheme.typography.labelMedium) },
-        elevation = FilterChipDefaults.elevatedFilterChipElevation()
+        label = { Text(text = stringResource(R.string.person), style = MaterialTheme.typography.labelMedium) }
     )
     SpacerMedium(SpacerType.HORIZONTAL)
     FilterChip(
@@ -281,24 +326,144 @@ private fun ClientTypePicker(
         ),
         selected = clientType == COMPANY,
         onClick = { uiEvent(CompanyTypePressed) },
-        label = { Text(text = "Firma", style = MaterialTheme.typography.labelMedium) })
+        label = { Text(text = stringResource(R.string.company), style = MaterialTheme.typography.labelMedium) }
+    )
 }
 
 @Composable
 private fun ClientSettings(
     uiEvent: (AddClientUiEvent) -> Unit,
     countries: List<ClientCountry>,
-) {
+    languages: List<ClientLanguage>,
+    currencies: List<ClientCurrency>,
+    otherClientInfo: Map<String, String>
+) = Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+
     SelectionDropDown(
         label = stringResource(R.string.select_country),
-        items = countries.map { it.countryName }.toTypedArray()
+        items = countries.map {
+            when (it) {
+                POLAND -> stringResource(id = R.string.poland)
+                GERMANY -> stringResource(id = R.string.germany)
+            }
+        }.toTypedArray()
     ) {
-        uiEvent(CountrySelected(it))
+        uiEvent(CountrySelected(countries[it]))
+    }
+    SelectionDropDown(
+        label = stringResource(R.string.pick_currency),
+        items = currencies.map { it.name }.toTypedArray()
+    ) {
+        uiEvent(CurrencySelected(currencies[it]))
+    }
+    SpacerMedium()
+    SelectionDropDown(
+        label = stringResource(R.string.pick_language),
+        items = languages.map {
+            when (it) {
+                POLISH -> stringResource(R.string.polish_language)
+                GERMAN -> stringResource(R.string.german_language)
+            }
+        }.toTypedArray()
+    ) {
+        uiEvent(LanguageSelected(languages[it]))
+    }
+    SpacerMedium()
+    CompanyAdditionalInfo(info = otherClientInfo, uiEvent = uiEvent)
+}
+
+@Composable
+private fun CompanyAdditionalInfo(info: Map<String, String>, uiEvent: (AddClientUiEvent) -> Unit) =
+    Column(modifier = Modifier.padding(24.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = "Dodatkowe informacje na fakturze: ",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            RoundedElevatedIcon(imageVector = Icons.Filled.Add, size = 32.dp, tint = MaterialTheme.colorScheme.tertiary) {
+                uiEvent(OnAddOthersPressed)
+            }
+        }
+
+        SpacerMedium()
+        info.forEach { otherInfo ->
+            SpacerMedium()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                InfoRow(modifier = Modifier.weight(1f), key = otherInfo.key, value = otherInfo.value)
+                RoundedElevatedIcon(imageVector = Icons.Filled.Close) {
+                    uiEvent(DeleteOtherInfo(otherInfoKey = otherInfo.key))
+                }
+            }
+            SpacerSmall()
+            Divider()
+        }
+    }
+
+@Composable
+private fun BottomSheets(
+    bottomSheet: BottomSheet?,
+    uiEvent: (AddClientUiEvent) -> Unit,
+    newCompanyInfoKey: TextFieldState,
+    newCompanyInfoValue: TextFieldState
+) {
+    when (bottomSheet) {
+        Error -> GenericErrorBottomSheet(
+            onDismiss = { uiEvent(CloseBottomSheet) },
+            onButtonClick = { uiEvent(TryAgainPressed) }
+        )
+
+        Others -> AppModalBottomSheet(onDismiss = { uiEvent(CloseBottomSheet) }) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp)
+            ) {
+                val focusManager = LocalFocusManager.current
+                Text(
+                    text = stringResource(uiR.string.additional_company_info_header),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                SpacerMedium()
+                OutlinedAppTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    state = newCompanyInfoKey,
+                    onValueChange = { uiEvent(OthersKeyChanged(it)) },
+                    label = stringResource(id = uiR.string.name),
+                    placeholder = stringResource(id = uiR.string.name),
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                    keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+                )
+                SpacerLarge()
+                OutlinedAppTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    state = newCompanyInfoValue,
+                    onValueChange = { uiEvent(OthersValueChanged(it)) },
+                    label = stringResource(id = uiR.string.value),
+                    placeholder = stringResource(id = uiR.string.value),
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                    keyboardActions = KeyboardActions(onNext = { focusManager.clearFocus() }),
+                )
+                SpacerLarge()
+                ElevatedIconButton(text = stringResource(id = uiR.string.save)) { uiEvent(SaveOthersPressed) }
+            }
+        }
+
+        null -> {}
     }
 }
 
 @ScreenLightDarkPreview
 @Composable
 private fun ClientScreenPreview() = ScreenPreview {
-    AddClientScreen(AddClientUiState())
+    AddClientScreen(AddClientUiState(screenType = CLIENT_SETTINGS))
 }
