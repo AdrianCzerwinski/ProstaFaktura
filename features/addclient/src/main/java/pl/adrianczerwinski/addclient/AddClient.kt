@@ -1,5 +1,7 @@
 package pl.adrianczerwinski.addclient
 
+import android.app.Activity
+import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -31,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -38,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import pl.adrianczerwinski.addclient.AddClientUiAction.CloseAddClientFlow
+import pl.adrianczerwinski.addclient.AddClientUiAction.CloseAddClientFlowWithSuccess
 import pl.adrianczerwinski.addclient.AddClientUiEvent.BackPressed
 import pl.adrianczerwinski.addclient.AddClientUiEvent.CityChanged
 import pl.adrianczerwinski.addclient.AddClientUiEvent.CloseBottomSheet
@@ -102,6 +106,7 @@ fun AddClient(
     viewModel: AddClientViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.states.collectAsStateWithLifecycle()
+    val context = LocalContext.current as Activity
 
     BackPressHandler { viewModel.handleUiEvent(BackPressed) }
 
@@ -116,7 +121,12 @@ fun AddClient(
 
     HandleAction(viewModel.actions) { action ->
         when (action) {
-            CloseAddClientFlow -> navigation.closeAddClientFlow()
+            is CloseAddClientFlowWithSuccess -> {
+                Toast.makeText(context, action.message, Toast.LENGTH_SHORT).show()
+                navigation.closeAddClientFlow()
+            }
+
+            is CloseAddClientFlow -> navigation.closeAddClientFlow()
         }
     }
 }

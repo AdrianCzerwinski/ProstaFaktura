@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import pl.adrianczerwinski.addclient.AddClientUiAction.CloseAddClientFlow
+import pl.adrianczerwinski.addclient.AddClientUiAction.CloseAddClientFlowWithSuccess
 import pl.adrianczerwinski.addclient.AddClientUiEvent.BackPressed
 import pl.adrianczerwinski.addclient.AddClientUiEvent.CityChanged
 import pl.adrianczerwinski.addclient.AddClientUiEvent.CloseBottomSheet
@@ -48,8 +49,9 @@ import pl.adrianczerwinski.domain.client.SaveClientUseCase
 import pl.adrianczerwinski.domain.validation.ValidateEmailUseCase
 import pl.adrianczerwinski.domain.validation.ValidatePostalCodeUseCase
 import pl.adrianczerwinski.domain.validation.ValidateSimpleInputUseCase
-import pl.adrianczerwinski.prostafaktura.core.ui.R
+import pl.adrianczerwinski.prostafaktura.features.addclient.R
 import pl.adrianczerwinski.ui.models.TextFieldState
+import pl.adrianczerwinski.prostafaktura.core.ui.R as uiR
 import javax.inject.Inject
 
 data class AddClientUiState(
@@ -89,6 +91,7 @@ data class AddClientUiState(
 }
 
 sealed class AddClientUiAction {
+    data class CloseAddClientFlowWithSuccess(val message: String) : AddClientUiAction()
     object CloseAddClientFlow : AddClientUiAction()
 }
 
@@ -188,7 +191,7 @@ class AddClientViewModel @Inject constructor(
 
     private fun onBackPressed() {
         when (states.value.screenType) {
-            CLIENT_DATA -> action(CloseAddClientFlow)
+            CLIENT_DATA -> action(CloseAddClientFlowWithSuccess(resourceProvider.getString(R.string.successfully_added_client)))
             CLIENT_SETTINGS -> updateState { copy(screenType = CLIENT_DATA) }
         }
     }
@@ -200,11 +203,16 @@ class AddClientViewModel @Inject constructor(
 
     private fun validateCompanyInputs(): Boolean {
         val companyNameValidationResult = validateSimpleInputUseCase(states.value.name.value)
-        val taxNumberValidationResult = validateSimpleInputUseCase(states.value.taxNumber.value)
         val streetValidationResult = validateSimpleInputUseCase(states.value.streetAndNumber.value)
         val cityValidationResult = validateSimpleInputUseCase(states.value.city.value)
         val postalCodeValidationResult = validatePostalCodeUseCase(states.value.postalCode.value)
         val emailValidationResult = validateEmailUseCase(states.value.email.value)
+
+        val taxNumberValidationResult = if (states.value.clientType == COMPANY) {
+            validateSimpleInputUseCase(states.value.taxNumber.value)
+        } else {
+            true
+        }
 
         updateState {
             copy(
@@ -266,16 +274,16 @@ class AddClientViewModel @Inject constructor(
                 copy(
                     newOthersKey = newOthersKey.copy(
                         isError = true,
-                        errorMessage = resourceProvider.getString(R.string.error_value_message)
+                        errorMessage = resourceProvider.getString(uiR.string.error_value_message)
                     ),
                     newOthersValue = newOthersValue.copy(
                         isError = true,
-                        errorMessage = resourceProvider.getString(R.string.error_value_message)
+                        errorMessage = resourceProvider.getString(uiR.string.error_value_message)
                     ),
                 )
             }
         }
     }
 
-    private fun getErrorMessage(isError: Boolean) = if (isError) resourceProvider.getString(R.string.error_value_message) else null
+    private fun getErrorMessage(isError: Boolean) = if (isError) resourceProvider.getString(uiR.string.error_value_message) else null
 }
