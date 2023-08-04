@@ -7,7 +7,7 @@ import pl.adrianczerwinski.user.database.model.UserModel
 import pl.adrianczerwinski.user.model.Company
 import pl.adrianczerwinski.user.model.User
 
-class Converters {
+class UserConverters {
     private val gson = Gson()
 
     @TypeConverter
@@ -21,20 +21,21 @@ class Converters {
     }
 }
 
-internal fun UserModel.toModel() = User(
+internal fun UserModel.toUser() = User(
     name = this.name,
-    company = this.company.toModel(),
+    company = this.company.toCompany(),
     phoneNumber = this.phoneNumber,
     email = this.email
 )
 
-internal fun CompanyModel.toModel() = Company(
+internal fun CompanyModel.toCompany() = Company(
     name = this.name,
     taxNumber = this.taxNumber,
     accountNumber = this.accountNo,
     streetAndNumber = this.streetAndNumber,
     city = this.city,
-    postalCode = this.postalCode
+    postalCode = this.postalCode,
+    others = this.others
 )
 
 internal fun User.toModel() = UserModel(
@@ -51,5 +52,6 @@ internal fun Company.toModel() = CompanyModel(
     accountNo = this.accountNumber,
     streetAndNumber = this.streetAndNumber,
     city = this.city,
-    postalCode = this.postalCode
+    postalCode = this.postalCode,
+    others = this.others
 )

@@ -10,7 +10,4 @@
     <string name="company_info_header">Podaj dane swojej firmy</string>
     <string name="confirm_info">Potwierdź dane</string>
     <string name="add_others">Dodaj inne dane</string>
-    <string name="value">Wartość</string>
-    <string name="additional_company_info_header">Dodatkowa informacja o firmie:</string>
-    <string name="additional_company_infos_label">Dodatkowe informacje o firmie</string>
 </resources>
