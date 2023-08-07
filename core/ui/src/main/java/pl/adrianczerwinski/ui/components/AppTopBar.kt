@@ -1,5 +1,6 @@
 package pl.adrianczerwinski.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ fun AppTopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -41,10 +43,11 @@ fun AppTopBar(
                 .padding(12.dp)
                 .size(32.dp),
             imageVector = leadingIcon,
-            contentDescription = "Back Arrow Icon"
+            contentDescription = "Back Arrow Icon",
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpacerLarge(SpacerType.HORIZONTAL)
-        Text(text = title, style = MaterialTheme.typography.labelMedium)
+        Text(text = title, style = MaterialTheme.typography.bodyMedium)
     }
 }
 

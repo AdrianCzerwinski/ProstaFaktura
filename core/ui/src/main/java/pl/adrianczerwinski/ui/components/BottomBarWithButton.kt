@@ -18,10 +18,10 @@ fun BottomBarWithButton(
     onClick: () -> Unit = {}
 ) {
     Column(
-        modifier = modifier.background(color = MaterialTheme.colorScheme.background),
+        modifier = modifier.background(color = MaterialTheme.colorScheme.onSecondary),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Divider(color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f), thickness = 1.dp)
+        Divider(color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1f), thickness = 1.dp)
         ElevatedIconButton(text = buttonText, textStyle = textStyle) { onClick() }
     }
 }

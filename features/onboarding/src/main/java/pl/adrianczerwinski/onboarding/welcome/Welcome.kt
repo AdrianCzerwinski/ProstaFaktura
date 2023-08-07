@@ -5,6 +5,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -69,6 +70,7 @@ private fun WelcomeScreen(
 ) = Column(
     modifier = Modifier
         .fillMaxSize()
+        .background(color = MaterialTheme.colorScheme.onSecondary)
         .padding(24.dp),
     horizontalAlignment = Alignment.CenterHorizontally
 ) {
@@ -78,7 +80,7 @@ private fun WelcomeScreen(
         Text(
             text = stringResource(R.string.welcome),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.primary
         )
         SpacerLarge()
         Pager(pages = uiState.pages, pagerState = pagerState) { }

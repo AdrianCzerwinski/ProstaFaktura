@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 fun AppModalBottomSheet(
     modifier: Modifier = Modifier,
     contentColor: Color = MaterialTheme.colorScheme.background,
-    containerColor: Color = MaterialTheme.colorScheme.background,
+    containerColor: Color = MaterialTheme.colorScheme.onSecondary,
     onDismiss: () -> Unit,
     content: @Composable () -> Unit
 ) = ModalBottomSheet(

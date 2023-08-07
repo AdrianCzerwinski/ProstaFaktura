@@ -172,7 +172,7 @@ class AddClientViewModel @Inject constructor(
                 city = city.value,
                 streetAndNumber = streetAndNumber.value,
                 postalCode = postalCode.value,
-                emails = listOf(email.value),
+                emails = if (email.value.isNotEmpty()) listOf(email.value) else null,
                 phoneNumber = phoneNumber.value
             )
         }
@@ -206,7 +206,7 @@ class AddClientViewModel @Inject constructor(
         val streetValidationResult = validateSimpleInputUseCase(states.value.streetAndNumber.value)
         val cityValidationResult = validateSimpleInputUseCase(states.value.city.value)
         val postalCodeValidationResult = validatePostalCodeUseCase(states.value.postalCode.value)
-        val emailValidationResult = validateEmailUseCase(states.value.email.value)
+        val emailValidationResult = validateEmailUseCase(email = states.value.email.value, canBeEmpty = true)
 
         val taxNumberValidationResult = if (states.value.clientType == COMPANY) {
             validateSimpleInputUseCase(states.value.taxNumber.value)

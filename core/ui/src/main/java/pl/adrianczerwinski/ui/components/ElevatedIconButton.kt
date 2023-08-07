@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +30,7 @@ fun ElevatedIconButton(
     textStyle: TextStyle = MaterialTheme.typography.labelLarge,
     icon: ImageVector? = null,
     enabled: Boolean = true,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
     onClick: () -> Unit = {}
 ) = ElevatedButton(
     modifier = modifier
@@ -35,10 +38,13 @@ fun ElevatedIconButton(
         .fillMaxWidth(),
     onClick = onClick,
     contentPadding = PaddingValues(12.dp),
-    enabled = enabled
+    enabled = enabled,
+    colors = ButtonDefaults.elevatedButtonColors(
+        containerColor = backgroundColor
+    )
 ) {
     Box(modifier = Modifier.fillMaxWidth()) {
-        Text(modifier = Modifier.align(Center), text = text, style = textStyle, color = MaterialTheme.colorScheme.onBackground)
+        Text(modifier = Modifier.align(Center), text = text, style = textStyle, color = MaterialTheme.colorScheme.primary)
         icon?.let {
             Icon(
                 modifier = Modifier
@@ -46,7 +52,7 @@ fun ElevatedIconButton(
                     .align(CenterEnd),
                 imageVector = it,
                 contentDescription = "Forward Arrow",
-                tint = MaterialTheme.colorScheme.onBackground
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -54,6 +60,6 @@ fun ElevatedIconButton(
 
 @Preview
 @Composable
-fun elevatedIconButtonPreview() = ProstaFakturaTheme(dynamicColor = false) {
+fun ElevatedIconButtonPreview() = ProstaFakturaTheme(dynamicColor = false) {
     ElevatedIconButton(text = "Sample", icon = Icons.Default.AccountCircle)
 }

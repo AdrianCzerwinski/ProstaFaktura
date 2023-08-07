@@ -30,9 +30,9 @@ fun PagerIndicator(
     currentPage: Int,
     pageCount: Int,
     modifier: Modifier = Modifier,
-    activeColor: Color = MaterialTheme.colorScheme.onBackground,
+    activeColor: Color = MaterialTheme.colorScheme.primary,
     inactiveColor: Color = defaultIndicatorInactiveColor,
-    indicatorSize: Dp = 6.dp,
+    indicatorSize: Dp = 12.dp,
     indicatorSpacing: Dp = indicatorSize,
     indicatorShape: Shape = CircleShape
 ) {

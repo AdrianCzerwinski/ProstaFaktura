@@ -22,9 +22,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -86,6 +83,7 @@ import pl.adrianczerwinski.ui.ScreenPreview
 import pl.adrianczerwinski.ui.components.AppTextField
 import pl.adrianczerwinski.ui.components.AppTopBar
 import pl.adrianczerwinski.ui.components.BottomBarWithButton
+import pl.adrianczerwinski.ui.components.Chip
 import pl.adrianczerwinski.ui.components.ElevatedIconButton
 import pl.adrianczerwinski.ui.components.InfoRow
 import pl.adrianczerwinski.ui.components.OutlinedAppTextField
@@ -94,7 +92,6 @@ import pl.adrianczerwinski.ui.components.SelectionDropDown
 import pl.adrianczerwinski.ui.components.SpacerLarge
 import pl.adrianczerwinski.ui.components.SpacerMedium
 import pl.adrianczerwinski.ui.components.SpacerSmall
-import pl.adrianczerwinski.ui.components.SpacerType
 import pl.adrianczerwinski.ui.components.bottomsheets.AppModalBottomSheet
 import pl.adrianczerwinski.ui.components.bottomsheets.GenericErrorBottomSheet
 import pl.adrianczerwinski.ui.models.TextFieldState
@@ -227,19 +224,19 @@ private fun DataFormFields(
         onValueChange = { uiEvent(NameChanged(it)) },
         placeholder = stringResource(
             when (clientType) {
-                PERSON -> uiR.string.full_name
-                COMPANY -> uiR.string.name
-            }
-        ),
-        label = stringResource(
-            when (clientType) {
                 PERSON -> uiR.string.name_placeholder
                 COMPANY -> uiR.string.company_name_placeholder
             }
         ),
+        label = stringResource(
+            when (clientType) {
+                PERSON -> uiR.string.full_name
+                COMPANY -> uiR.string.name
+            }
+        ),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        textStyle = MaterialTheme.typography.bodyMedium
+        textStyle = MaterialTheme.typography.labelMedium
     )
 
     AnimatedVisibility(clientType == COMPANY) {
@@ -253,7 +250,7 @@ private fun DataFormFields(
             label = stringResource(uiR.string.tax_number),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            textStyle = MaterialTheme.typography.bodyMedium
+            textStyle = MaterialTheme.typography.labelMedium
         )
         SpacerMedium()
     }
@@ -264,11 +261,11 @@ private fun DataFormFields(
             .padding(bottom = 12.dp, start = 12.dp, end = 12.dp),
         state = city,
         onValueChange = { uiEvent(CityChanged(it)) },
-        placeholder = stringResource(uiR.string.city),
-        label = stringResource(uiR.string.city_placeholder),
+        placeholder = stringResource(uiR.string.city_placeholder),
+        label = stringResource(uiR.string.city),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        textStyle = MaterialTheme.typography.bodyMedium
+        textStyle = MaterialTheme.typography.labelMedium
     )
 
     AppTextField(
@@ -277,11 +274,11 @@ private fun DataFormFields(
             .padding(bottom = 12.dp, start = 12.dp, end = 12.dp),
         state = streetAndNumber,
         onValueChange = { uiEvent(StreetAndNumberChanged(it)) },
-        placeholder = stringResource(uiR.string.street_name),
-        label = stringResource(uiR.string.street_name_placeholder),
+        placeholder = stringResource(uiR.string.street_name_placeholder),
+        label = stringResource(uiR.string.street_name),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        textStyle = MaterialTheme.typography.bodyMedium
+        textStyle = MaterialTheme.typography.labelMedium
     )
 
     AppTextField(
@@ -290,11 +287,11 @@ private fun DataFormFields(
             .padding(bottom = 12.dp, start = 12.dp, end = 12.dp),
         state = postalCode,
         onValueChange = { uiEvent(PostalCodeChanged(it)) },
-        placeholder = stringResource(uiR.string.postal_code),
-        label = stringResource(uiR.string.postal_code_placeholder),
+        placeholder = stringResource(uiR.string.postal_code_placeholder),
+        label = stringResource(uiR.string.postal_code),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        textStyle = MaterialTheme.typography.bodyMedium
+        textStyle = MaterialTheme.typography.labelMedium
     )
 
     AppTextField(
@@ -303,41 +300,23 @@ private fun DataFormFields(
             .padding(bottom = 12.dp, start = 12.dp, end = 12.dp),
         state = email,
         onValueChange = { uiEvent(EmailChanged(it)) },
-        placeholder = stringResource(uiR.string.email),
-        label = stringResource(uiR.string.email_placeholder),
+        placeholder = stringResource(uiR.string.email_placeholder),
+        label = stringResource(uiR.string.email),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-        textStyle = MaterialTheme.typography.bodyMedium
+        textStyle = MaterialTheme.typography.labelMedium
     )
 
     SpacerMedium()
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ClientTypePicker(
     uiEvent: (AddClientUiEvent) -> Unit,
     clientType: ClientType
 ) = Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-    FilterChip(
-        colors = FilterChipDefaults.filterChipColors(
-            selectedContainerColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            selectedLabelColor = MaterialTheme.colorScheme.background
-        ),
-        selected = clientType == PERSON,
-        onClick = { uiEvent(PersonTypePressed) },
-        label = { Text(text = stringResource(R.string.person), style = MaterialTheme.typography.labelMedium) }
-    )
-    SpacerMedium(SpacerType.HORIZONTAL)
-    FilterChip(
-        colors = FilterChipDefaults.filterChipColors(
-            selectedContainerColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            selectedLabelColor = MaterialTheme.colorScheme.background
-        ),
-        selected = clientType == COMPANY,
-        onClick = { uiEvent(CompanyTypePressed) },
-        label = { Text(text = stringResource(R.string.company), style = MaterialTheme.typography.labelMedium) }
-    )
+    Chip(isSelected = clientType == PERSON, text = stringResource(R.string.person)) { uiEvent(PersonTypePressed) }
+    Chip(isSelected = clientType == COMPANY, text = stringResource(R.string.company)) { uiEvent(CompanyTypePressed) }
 }
 
 @Composable
@@ -393,7 +372,7 @@ private fun CompanyAdditionalInfo(info: Map<String, String>, uiEvent: (AddClient
             Text(
                 modifier = Modifier.weight(1f),
                 text = "Dodatkowe informacje na fakturze: ",
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.labelMedium
             )
             RoundedElevatedIcon(imageVector = Icons.Filled.Add, size = 32.dp, tint = MaterialTheme.colorScheme.tertiary) {
                 uiEvent(OnAddOthersPressed)
@@ -440,7 +419,7 @@ private fun BottomSheets(
                 val focusManager = LocalFocusManager.current
                 Text(
                     text = stringResource(uiR.string.additional_company_info_header),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 SpacerMedium()
