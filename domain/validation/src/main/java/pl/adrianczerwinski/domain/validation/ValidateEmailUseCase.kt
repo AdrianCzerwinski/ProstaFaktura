@@ -4,9 +4,9 @@ import android.util.Patterns
 import javax.inject.Inject
 
 class ValidateEmailUseCase @Inject constructor() {
-    operator fun invoke(email: String): Boolean {
+    operator fun invoke(email: String, canBeEmpty: Boolean = false): Boolean {
         if (email.isBlank()) {
-            return false
+            return canBeEmpty
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return false

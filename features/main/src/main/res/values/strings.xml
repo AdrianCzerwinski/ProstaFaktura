@@ -2,4 +2,6 @@
 <resources>
     <string name="add_invoice">Utwórz fakturę</string>
     <string name="add_client">Dodaj klienta</string>
+    <string name="invoices">Faktury</string>
+    <string name="stats">Statystyki</string>
 </resources>

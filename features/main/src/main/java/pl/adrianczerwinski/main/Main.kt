@@ -15,14 +15,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
@@ -59,7 +57,6 @@ import pl.adrianczerwinski.ui.ScreenLightDarkPreview
 import pl.adrianczerwinski.ui.ScreenPreview
 import pl.adrianczerwinski.ui.components.SpacerLarge
 import pl.adrianczerwinski.ui.components.SpacerType.HORIZONTAL
-import pl.adrianczerwinski.ui.components.SpacerXSmall
 import pl.adrianczerwinski.ui.components.bottomsheets.AppModalBottomSheet
 
 @Composable
@@ -137,7 +134,7 @@ private fun BottomNavigationBar(
     Surface(
         modifier = Modifier,
         shadowElevation = 8.dp,
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.onSecondary
     ) {
         Row(
             modifier = Modifier
@@ -145,64 +142,59 @@ private fun BottomNavigationBar(
                 .padding(BottomAppBarDefaults.ContentPadding),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            HomeBottomNavItem(currentRoute = currentRoute, onHomeClick = onHomeClick)
+            StatsBottomNavItem(currentRoute = currentRoute, onStatsClick = onHomeClick)
             InvoicesBottomNavItem(currentRoute = currentRoute, onInvoicesClick = onInvoicesClick)
         }
     }
 }
 
 @Composable
-private fun RowScope.HomeBottomNavItem(currentRoute: String, onHomeClick: () -> Unit) = Column(
-    modifier = Modifier.weight(1f),
+private fun RowScope.StatsBottomNavItem(currentRoute: String, onStatsClick: () -> Unit) = Column(
+    modifier = Modifier
+        .weight(1f)
+        .clickable { onStatsClick() },
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center
 ) {
     val contentColor = if (currentRoute == BottomNavRoutes.home) {
-        MaterialTheme.colorScheme.secondary
+        MaterialTheme.colorScheme.primary
     } else {
         MaterialTheme.colorScheme.tertiary
     }
     Icon(
         modifier = Modifier
-            .clickable { onHomeClick() }
-            .padding(12.dp)
+            .padding(top = 12.dp, bottom = 4.dp)
             .size(32.dp),
-        painter = painterResource(id = R.drawable.ic_home),
+        painter = painterResource(id = R.drawable.ic_piechart),
         contentDescription = "Home Icon",
         tint = contentColor
     )
-    SpacerXSmall(HORIZONTAL)
-    Divider(
-        modifier = Modifier.width(32.dp),
-        color = contentColor
-    )
+    Text(text = stringResource(R.string.stats), style = MaterialTheme.typography.bodyMedium, color = contentColor)
 }
 
 @Composable
 private fun RowScope.InvoicesBottomNavItem(currentRoute: String, onInvoicesClick: () -> Unit) = Column(
-    modifier = Modifier.weight(1f),
+    modifier = Modifier
+        .weight(1f)
+        .clickable { onInvoicesClick() },
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center
 ) {
     val contentColor = if (currentRoute == BottomNavRoutes.invoices) {
-        MaterialTheme.colorScheme.secondary
+        MaterialTheme.colorScheme.primary
     } else {
         MaterialTheme.colorScheme.tertiary
     }
     Icon(
         modifier = Modifier
-            .clickable { onInvoicesClick() }
-            .padding(12.dp)
+            .padding(top = 12.dp)
             .size(32.dp),
         painter = painterResource(id = R.drawable.ic_invoice),
         contentDescription = "Invoices Icon",
         tint = contentColor
     )
-    SpacerXSmall(HORIZONTAL)
-    Divider(
-        modifier = Modifier.width(32.dp),
-        color = contentColor
-    )
+
+    Text(text = stringResource(R.string.invoices), style = MaterialTheme.typography.bodyMedium, color = contentColor)
 }
 
 @Composable
@@ -223,13 +215,13 @@ private fun MainFloatingActionButton(onClick: () -> Unit) = LargeFloatingActionB
     onClick = onClick,
     shape = CircleShape,
     modifier = Modifier.offset(y = 60.dp),
-    containerColor = MaterialTheme.colorScheme.tertiary
+    containerColor = MaterialTheme.colorScheme.onSecondary
 ) {
     Icon(
         imageVector = Icons.Filled.Add,
         contentDescription = "Add Button",
         modifier = Modifier.size(50.dp),
-        tint = MaterialTheme.colorScheme.background
+        tint = MaterialTheme.colorScheme.primary
     )
 }
 
@@ -251,7 +243,11 @@ private fun BottomSheets(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(imageVector = Icons.Filled.Add, contentDescription = "New invoice button")
+                        Icon(
+                            modifier = Modifier.size(32.dp),
+                            painter = painterResource(id = R.drawable.ic_new_invoice),
+                            contentDescription = "New invoice button"
+                        )
                         SpacerLarge(HORIZONTAL)
                         Text(text = stringResource(R.string.add_invoice))
                     }
@@ -263,7 +259,11 @@ private fun BottomSheets(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(imageVector = Icons.Filled.Add, contentDescription = "New client button")
+                        Icon(
+                            modifier = Modifier.size(32.dp),
+                            painter = painterResource(id = R.drawable.ic_client),
+                            contentDescription = "New client button"
+                        )
                         SpacerLarge(HORIZONTAL)
                         Text(text = stringResource(R.string.add_client))
                     }
