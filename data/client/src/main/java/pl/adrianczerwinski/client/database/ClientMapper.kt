@@ -28,13 +28,13 @@ class ClientsConverter {
     }
 }
 internal fun ClientModel.toClient() = Client(
+    id = this.id,
     name = this.name,
     taxNumber = this.taxNumber,
     streetAndNumber = this.streetAndNumber,
     city = this.city,
     postalCode = this.postalCode,
     emails = this.emails,
-    phoneNumber = this.phoneNumber,
     others = this.others,
     language = this.language,
     currency = this.currency,
@@ -47,7 +47,6 @@ internal fun Client.toModel() = ClientModel(
     streetAndNumber = this.streetAndNumber,
     city = this.city,
     postalCode = this.postalCode,
-    phoneNumber = this.phoneNumber,
     emails = this.emails,
     others = this.others,
     language = this.language,

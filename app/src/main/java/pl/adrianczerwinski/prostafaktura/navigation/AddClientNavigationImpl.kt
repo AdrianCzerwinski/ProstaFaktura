@@ -7,6 +7,6 @@ class AddClientNavigationImpl(
     private val navController: NavController
 ) : AddClientNavigation {
     override fun closeAddClientFlow() {
-        navController.popBackStack(Destinations.Client.ROUTE, true)
+        navController.popBackStack(Destinations.ClientDestination.ROUTE, true)
     }
 }
