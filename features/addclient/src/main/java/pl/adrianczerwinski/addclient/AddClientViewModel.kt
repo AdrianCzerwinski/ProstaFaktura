@@ -172,13 +172,12 @@ class AddClientViewModel @Inject constructor(
                 city = city.value,
                 streetAndNumber = streetAndNumber.value,
                 postalCode = postalCode.value,
-                emails = if (email.value.isNotEmpty()) listOf(email.value) else null,
-                phoneNumber = phoneNumber.value
+                emails = if (email.value.isNotEmpty()) listOf(email.value) else null
             )
         }
         val result = saveClientUseCase(client)
         if (result.isSuccess) {
-            action(CloseAddClientFlow)
+            action(CloseAddClientFlowWithSuccess(resourceProvider.getString(R.string.successfully_added_client)))
         } else {
             updateState { copy(bottomSheet = Error) }
         }
@@ -191,7 +190,7 @@ class AddClientViewModel @Inject constructor(
 
     private fun onBackPressed() {
         when (states.value.screenType) {
-            CLIENT_DATA -> action(CloseAddClientFlowWithSuccess(resourceProvider.getString(R.string.successfully_added_client)))
+            CLIENT_DATA -> action(CloseAddClientFlow)
             CLIENT_SETTINGS -> updateState { copy(screenType = CLIENT_DATA) }
         }
     }

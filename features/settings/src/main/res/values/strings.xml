@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_invoice">Utwórz fakturę</string>
+    <string name="add_client">Dodaj klienta</string>
+    <string name="invoices">Faktury</string>
+    <string name="stats">Statystyki</string>
+    <string name="settings">Ustawienia</string>
+    <string name="your_data">Twoje dane</string>
+    <string name="edit">Edytuj</string>
+    <string name="clients">Klienci</string>
+    <string name="go">Przejdź</string>
+</resources>

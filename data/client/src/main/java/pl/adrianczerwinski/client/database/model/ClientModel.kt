@@ -5,14 +5,14 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "client")
 data class ClientModel(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val taxNumber: String,
     val name: String,
     val streetAndNumber: String,
     val city: String,
     val postalCode: String,
     val emails: List<String>? = null,
-    val phoneNumber: String,
     val others: Map<String, String>? = null,
     val language: String,
     val currency: String,

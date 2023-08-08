@@ -21,12 +21,15 @@ import pl.adrianczerwinski.main.MainFeatureNavigation
 import pl.adrianczerwinski.onboarding.OnboardingFeatureNavigation
 import pl.adrianczerwinski.onboarding.signin.SignIn
 import pl.adrianczerwinski.onboarding.welcome.Welcome
-import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Client
-import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Invoice
+import pl.adrianczerwinski.prostafaktura.navigation.Destinations.ClientDestination
+import pl.adrianczerwinski.prostafaktura.navigation.Destinations.InvoiceDestination
 import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Launch
 import pl.adrianczerwinski.prostafaktura.navigation.Destinations.MainDestination
 import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Onboarding
-import pl.adrianczerwinski.prostafaktura.navigation.Destinations.Settings
+import pl.adrianczerwinski.prostafaktura.navigation.Destinations.SettingsDestination
+import pl.adrianczerwinski.settings.Settings
+import pl.adrianczerwinski.settings.SettingsFeatureNavigation
+import pl.adrianczerwinski.settings.clients.Clients
 
 @Composable
 fun ProstaFakturaNavigation(navController: NavHostController) {
@@ -34,6 +37,7 @@ fun ProstaFakturaNavigation(navController: NavHostController) {
     val onboardingFeatureNavigationImpl: OnboardingFeatureNavigation = OnboardingFeatureNavigationImpl(navController)
     val mainFeatureNavigationImpl: MainFeatureNavigation = MainFeatureNavigationImpl(navController)
     val addClientFeatureNavigationImpl: AddClientNavigation = AddClientNavigationImpl(navController)
+    val settingsNavigation: SettingsFeatureNavigation = SettingsNavigationImpl(navController)
 
     Surface(
         modifier = Modifier
@@ -68,24 +72,25 @@ fun ProstaFakturaNavigation(navController: NavHostController) {
             }
 
             navigation(
-                startDestination = Settings.SETTINGS_MAIN,
-                route = Settings.ROUTE
+                startDestination = SettingsDestination.SETTINGS_MAIN,
+                route = SettingsDestination.ROUTE
             ) {
-                composable(Settings.SETTINGS_MAIN) {}
+                composable(SettingsDestination.SETTINGS_MAIN) { Settings(navigation = settingsNavigation) }
+                composable(SettingsDestination.CLIENTS_LIST) { Clients(navigation = settingsNavigation) }
             }
 
             navigation(
-                startDestination = Invoice.INVOICE_CREATE,
-                route = Invoice.ROUTE
+                startDestination = InvoiceDestination.INVOICE_CREATE,
+                route = InvoiceDestination.ROUTE
             ) {
-                composable(Invoice.INVOICE_CREATE) {}
+                composable(InvoiceDestination.INVOICE_CREATE) {}
             }
 
             navigation(
-                startDestination = Client.CLIENT_ADD,
-                route = Client.ROUTE
+                startDestination = ClientDestination.CLIENT_ADD,
+                route = ClientDestination.ROUTE
             ) {
-                composable(Client.CLIENT_ADD) { AddClient(addClientFeatureNavigationImpl) }
+                composable(ClientDestination.CLIENT_ADD) { AddClient(addClientFeatureNavigationImpl) }
             }
         }
     }
@@ -108,17 +113,18 @@ object Destinations {
         const val MAIN_HOME = "main_home"
     }
 
-    object Settings {
+    object SettingsDestination {
         const val ROUTE = "settings"
         const val SETTINGS_MAIN = "settings_main"
+        const val CLIENTS_LIST = "clients_list"
     }
 
-    object Invoice {
+    object InvoiceDestination {
         const val ROUTE = "invoice"
         const val INVOICE_CREATE = "invoice_CREATE"
     }
 
-    object Client {
+    object ClientDestination {
         const val ROUTE = "client"
         const val CLIENT_ADD = "client_add"
     }

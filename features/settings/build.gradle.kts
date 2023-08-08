@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "pl.adrianczerwinski.prostafaktura.features.main"
+    namespace = "pl.adrianczerwinski.prostafaktura.features.settings"
 
     composeOptions {
         kotlinCompilerExtensionVersion = AppData.kotlinCompilerExtensionVersion
@@ -30,6 +30,8 @@ android {
 dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
+    implementation(project(":domain:client"))
+    implementation(project(":data:client"))
 
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.lifecycleRuntimeKtx)
@@ -47,6 +49,7 @@ dependencies {
 
     implementation(Dependencies.DI.hiltComposeNavigation)
     implementation(Dependencies.DI.hilt)
+    testImplementation(project(mapOf("path" to ":features:main")))
     kapt(Dependencies.DI.hiltCompiler)
     kapt(Dependencies.DI.hiltCoreCompiler)
 
